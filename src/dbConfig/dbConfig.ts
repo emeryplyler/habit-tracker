@@ -1,0 +1,19 @@
+import mongoose, { mongo } from "mongoose";
+
+export async function connect() {
+    try {
+        mongoose.connect(process.env.MONGO_URI!); // ! is the non-null assertion operator; 'assuming this is not null'
+        const connection = mongoose.connection;
+        connection.on("connected", () => {
+            console.log("Connected to DB");
+        })
+
+        connection.on("error", (err) => {
+            console.log("Couldn't connect to DB: " + err);
+        })
+        
+    } catch (error) {
+        console.log("Couldn't connect to DB");
+        console.log(error);
+    }
+}
