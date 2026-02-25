@@ -1,0 +1,47 @@
+import { connect } from "@/dbConfig/dbConfig";
+import User from "@/models/userModel";
+import { NextRequest, NextResponse } from "next/server";
+import bcrypt from "bcryptjs";
+
+connect();
+
+// all operations on path /signup should be handled in this file
+
+export async function POST(request: NextRequest) {
+    try {
+        const reqBody = await request.json();
+        const { username, password, email } = reqBody;
+        console.log(reqBody); // TODO: remove in production build
+
+        // does user already exist?
+        const user = await User.findOne({ email });
+        if (user) {
+            return NextResponse.json(
+                { error: "A user is already registered with that email" },
+                { status: 400 }
+            );
+        }
+
+        // hash password to store in db
+        const salt = await bcrypt.genSalt();
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        const newUser = new User({
+            username,
+            password: hashedPassword,
+            email
+        });
+
+        const savedUser = await newUser.save();
+        console.log(savedUser); // TODO: remove
+
+        return NextResponse.json(
+            { message: "User created successfully" },
+            { status: 201 }
+        );
+
+    } catch (error: any) {
+        return NextResponse.json({ error: error.message },
+            { status: 500 });
+    }
+}
