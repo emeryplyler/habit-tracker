@@ -1,20 +1,43 @@
 "use client"; // decorator indicating client component - can now use react hooks ???
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 export default function LoginPage() {
+    const router = useRouter(); // get router so we can redirect user
     // create new stateful user object
     const [user, setUser] = React.useState({
         username: "",
         password: "",
     });
 
-    // signup function called by sign up event
+    const [buttonDisabled, setButtonDisabled] = useState(false);
+    const [loading, setLoading] = useState(false); // technically not loading until page logic starts
+    
+    // log in function called when login button pressed
     const onLogin = async () => {
-
+        try {
+            setLoading(true); // hide behind loading screen
+            const response = await axios.post("/api/users/login", user); // make axios post request to our api using entered username and password
+            // if post request fails, will enter catch statement; otherwise, this:
+            toast.success("Login successful");
+            router.push("/"); // redirect user to homepage, now logged in
+        } catch (error: any) {
+            toast.error(error.message)
+        } finally {
+            setLoading(false);
+        }
     };
+
+    useEffect(() => {
+        if (user.username.length > 0 && user.password.length > 0) {
+            setButtonDisabled(false);
+        } else {
+            setButtonDisabled(true); // data invalid; disable submit button
+        }
+    })
 
     return (
         <div>
