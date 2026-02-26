@@ -3,9 +3,23 @@ import axios from "axios";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function AccountPage() {
     const router = useRouter();
+
+    // get account information
+    const [user, setUser] = useState();
+    const getUserDetails = async () => {
+        const res = await axios.get("/api/users/me"); // retrieve user's information from api, which calls DB
+        setUser(res.data.user._id)
+    }
+
+    useEffect(() => {
+        getUserDetails();
+    }, [])
+
+    // logout button function
     const logout = async () => {
         try {
             await axios.get("/api/users/logout"); // send get request to this path
@@ -19,6 +33,8 @@ export default function AccountPage() {
     return (
         <div>
             <h1>Account Settings</h1>
+            <hr />
+            <h2>{user ? <Link href={`/account/${user}`}>Profile</Link> : "No user found"}</h2>
             <hr />
             <button onClick={logout}>Log Out</button>
         </div>
