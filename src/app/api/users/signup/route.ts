@@ -37,10 +37,10 @@ export async function POST(request: NextRequest) {
         console.log(savedUser); // TODO: remove
 
         // send verification email
-        await sendEmail({ email, emailType: "VERIFY", userId: savedUser._id });
+        // await sendEmail({ email, emailType: "VERIFY", userId: savedUser._id });
 
         return NextResponse.json(
-            { message: "User created successfully" },
+            { message: "User created successfully", data: savedUser },
             { status: 201 }
         );
 

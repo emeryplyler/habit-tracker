@@ -3,7 +3,6 @@ import User from "@/models/userModel";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { useAppContext } from "@/context";
 
 connect();
 
@@ -12,8 +11,6 @@ export async function POST(request: NextRequest) {
         const reqBody = await request.json();
         const { username, password } = reqBody; // get email and password from request body
         console.log(reqBody); // TODO: remove in production build
-
-        let { currentUser, setCurrentUser } = useAppContext(); // prepare to set current user id for views to display current user
 
         // does user exist?
         const user = await User.findOne({ username });
@@ -42,15 +39,12 @@ export async function POST(request: NextRequest) {
 
         const token = jwt.sign(tokenData, process.env.JWT_SECRET!, { expiresIn: "1d" }); // sign token
         const response = NextResponse.json( // create response
-            { message: "Login successful" },
+            { message: "Login successful", data: user },
             { status: 200 } // NOTE: if you never provide either success: true or { status: 200 } or the like, next doesn't recognize this function as an http method
         );
         response.cookies.set("token", token, { // set the cookie in client's browser
             httpOnly: true,
         });
-
-        // save current user somewhere to display in views
-        setCurrentUser({ id: user._id, username: user.username });
 
         return response; // response is finished; notify client by sending the response
 
