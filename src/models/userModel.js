@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { habitSchema } from "./habitModel"
+import { habitSchema } from "@/models/habitModel"
 
 const userSchema = new mongoose.Schema({
     username: {

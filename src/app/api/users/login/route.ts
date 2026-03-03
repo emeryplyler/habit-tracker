@@ -3,6 +3,7 @@ import User from "@/models/userModel";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { useAppContext } from "@/context";
 
 connect();
 
@@ -11,6 +12,8 @@ export async function POST(request: NextRequest) {
         const reqBody = await request.json();
         const { username, password } = reqBody; // get email and password from request body
         console.log(reqBody); // TODO: remove in production build
+
+        let { currentUser, setCurrentUser } = useAppContext(); // prepare to set current user id for views to display current user
 
         // does user exist?
         const user = await User.findOne({ username });
@@ -35,8 +38,8 @@ export async function POST(request: NextRequest) {
             id: user._id,
             username: user.username,
             email: user.email
-        }
-        
+        };
+
         const token = jwt.sign(tokenData, process.env.JWT_SECRET!, { expiresIn: "1d" }); // sign token
         const response = NextResponse.json( // create response
             { message: "Login successful" },
@@ -45,6 +48,10 @@ export async function POST(request: NextRequest) {
         response.cookies.set("token", token, { // set the cookie in client's browser
             httpOnly: true,
         });
+
+        // save current user somewhere to display in views
+        setCurrentUser({ id: user._id, username: user.username });
+
         return response; // response is finished; notify client by sending the response
 
     } catch (error: any) {

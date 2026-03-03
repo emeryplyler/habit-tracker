@@ -2,24 +2,20 @@
 "use client"; // in order to use useState, this must be a client component
 import { createContext, useContext, useState } from "react";
 
-const AppContext = createContext({ // initialize context to the same object we'll use state for
-    currentUserId: null,
-    currentUsername: null
-});
+const AppContext = createContext<any>(undefined);
 
+// create wrapper to be used at top level layout.tsx to provide context to all children (elements inside wrapper)
 export function AppWrapper({ children }: { children: React.ReactNode; }) {
-    let [state, setState] = useState({ // initialize stateful var to whatever context initialized for us
-        currentUserId: null,
-        currentUsername: null
-    });
+    let [currentUser, setCurrentUser] = useState();
 
     return (
-        <AppContext.Provider value={state}>
+        <AppContext.Provider value={{currentUser, setCurrentUser}}>
             {children}
         </AppContext.Provider>
     )
 }
 
+// create function to access context from other files
 export function useAppContext() {
     return useContext(AppContext);
 }
