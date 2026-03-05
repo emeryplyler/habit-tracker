@@ -6,7 +6,7 @@ export function proxy(request: NextRequest) {
 
     const path = request.nextUrl.pathname; // get current location
 
-    const isPublicPath = path === "/login" || path === "/signup";
+    const isPublicPath = path === "/login" || path === "/signup" || path === "/";
 
     const token = request.cookies.get("token")?.value || ""; // is user logged in? token will either equal nothing (logged out) or the token (logged in)
 

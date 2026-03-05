@@ -16,9 +16,15 @@ export default function AccountPage() {
     // get account information
     const [user, setUser] = useState();
     const getUserDetails = async () => {
-        const res = await axios.get("/api/users/me"); // retrieve user's information from api, which calls DB
-        setUser(res.data.user._id);
-        setLoading(false);
+        try {
+            const res = await axios.get("/api/users/me"); // retrieve user's information from api, which calls DB
+            setUser(res.data.user._id);
+        } catch (error: any) {
+            toast.error(error.message);
+        } finally {
+            setLoading(false);
+        }
+
     };
 
     useEffect(() => {

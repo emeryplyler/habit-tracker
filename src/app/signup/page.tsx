@@ -3,7 +3,7 @@ import Link from "next/link";
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-// import { toast } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 
 export default function SignupPage() {
     const router = useRouter();
@@ -22,27 +22,26 @@ export default function SignupPage() {
         try {
             setLoading(true); // hide behind loading screen
             const response = await axios.post("/api/users/signup", user); // make post request to api using stateful object var
-            console.log("Signup successful", response.data);
+            toast.success("Signup successful!");
             router.push("/"); // redirect user to home page
         } catch (error: any) {
-            // toast.error(error.message);
+            toast.error(error.message);
         } finally {
             setLoading(false);
         }
     };
 
-    // useEffect(() => {
-    //     if (user.email.length > 0 && user.password.length> 0 && user.username.length > 0) {
-    //         setButtonDisabled(false); // enable button
-    //     } else {
-    //         setButtonDisabled(true);
-    //     }
-    // }, [user])
+    useEffect(() => {
+        if (user.email.length > 0 && user.password.length> 0 && user.username.length > 0) {
+            setButtonDisabled(false); // enable button
+        } else {
+            setButtonDisabled(true);
+        }
+    }, [user])
 
     return (
         <div>
-            {/* TODO: replace with loading screen */}
-            {/* <h1>{loading ? "Loading..." : "Sign Up"}</h1> */}
+            <h1>Create an account</h1>
             <hr />
             <label htmlFor="username">Username</label>
             <input
@@ -75,6 +74,7 @@ export default function SignupPage() {
             <button
                 // when button clicked, call onSignup function
                 onClick={onSignup}
+                className="signUpButton"
             >
                 {/* TODO: make this just gray out the button instead of changing text */}
                 {/* {buttonDisabled ? "No signup" : "Sign Up"}  */}
