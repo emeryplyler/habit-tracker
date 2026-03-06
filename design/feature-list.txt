@@ -1,0 +1,8 @@
+- create account and log in
+- account associated with habits
+- CRUD operations for user's habits
+    - create one
+    - view all
+    - edit one
+    - delete one
+- detect if user has met goal
