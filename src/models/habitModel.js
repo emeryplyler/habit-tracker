@@ -18,8 +18,15 @@ const habitSchema = new mongoose.Schema({
         min: 1,
         max: 5
     },
-    goalCount: Number, // number of times user wants to complete goal this cycle (day or week)
-    completeCount: Number // number of times user has completed goal this cycle
+    goalCount: {
+        type: Number, // number of times user wants to complete goal this cycle (day or week)
+        min: 1
+    },
+    completeCount: Number, // number of times user has completed goal this cycle
+    user: {
+        type: mongoose.Schema.ObjectId,
+        ref: "User" // reference table that User schema is attached to
+    }
 });
 
 const Habit = mongoose.model("habit", habitSchema);
