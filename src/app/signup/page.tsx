@@ -71,6 +71,7 @@ export default function SignupPage() {
                 placeholder="Email"
             />
 
+            {/* TODO: replace the button with "Loading..." when loading */}
             <button
                 // when button clicked, call onSignup function
                 onClick={onSignup}
