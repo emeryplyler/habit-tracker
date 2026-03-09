@@ -30,7 +30,7 @@ export default function HabitsPage() {
 
     return (
         <div>
-            <h1>New Habit</h1>
+            <h1>Create New Habit</h1>
             <hr />
             <label htmlFor="name">Name</label>
             <input

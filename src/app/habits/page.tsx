@@ -6,6 +6,7 @@ import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { useAppContext } from "@/context";
 import User from "@/models/userModel";
+import Link from "next/link";
 
 export default function HabitsPage() {
     const router = useRouter(); // get router so we can redirect user
@@ -38,6 +39,7 @@ export default function HabitsPage() {
     return (
         <div>
             <h1>Habits</h1>
+            <Link href="/newhabit">New habit</Link>
             <hr />
             {loading && "Loading..."}
             {!loading && (

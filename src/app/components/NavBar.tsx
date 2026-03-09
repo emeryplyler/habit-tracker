@@ -48,6 +48,10 @@ const NavBar = () => {
         {
             name: "Account",
             link: "/account"
+        },
+        {
+            name: "Habits",
+            link: "/habits"
         }
     ]
 
@@ -86,6 +90,7 @@ const NavBar = () => {
                         </li>
                     );
                 })}
+                {/* handle logout link using a button since there's no logout page */}
                 {currentUser && (<button onClick={logout}>Log Out</button>)}
             </ul>
 
