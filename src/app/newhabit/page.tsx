@@ -25,10 +25,19 @@ export default function HabitsPage() {
     const [loading, setLoading] = useState(true);
 
     const submitNewHabit = async () => {
-        // add new habit to db
-        // toast
-        // redirect user to /habits
-        console.log(habit);
+        try {
+            // add new habit to db
+            setLoading(true);
+            const response = await axios.post("/api/habits/create", habit);
+            // redirect user to /habits
+            toast.success("Habit created!");
+            router.push("/habits");
+            console.log(habit); // TODO: remove            
+        } catch (error: any) {
+            toast.error(error.message);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
