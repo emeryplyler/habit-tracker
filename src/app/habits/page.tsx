@@ -42,6 +42,8 @@ export default function HabitsPage() {
             {loading && "Loading..."}
             {!loading && (
                 <ul>
+                    {habits.length < 1 && (<div>No habits found</div>)}
+
                     {habits.map(habit => {
                         return (
                             <li>{habit}</li>

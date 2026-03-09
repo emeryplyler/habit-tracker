@@ -12,7 +12,9 @@ export function proxy(request: NextRequest) {
 
     if (isPublicPath && token) { // NOTE: for some reason, if you take out the '&& token' part it doesn't redirect correctly and firefox won't show it to me
         // user can visit public path
-        return NextResponse.redirect(new URL("/", request.nextUrl));
+        if (path != "/") {
+            return NextResponse.redirect(new URL("/", request.nextUrl));
+        }
     }
 
     if (!isPublicPath && !token) {
