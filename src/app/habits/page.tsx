@@ -15,13 +15,22 @@ export default function HabitsPage() {
 
     // instead of context, retrieve information from DB since we need to communicate with it anyway
     const [user, setUser] = useState();
-    const [habits, setHabits] = useState([]);
+    const [habits, setHabits] = useState<any[]>([]); // type is unknown
 
     const getHabits = async () => {
         const response = await axios.get("/api/users/me"); // retrieve user's information from api which calls DB
         setUser(response.data.user);
-        setHabits(response.data.user.habits);
+        // retrieve information about each habit
+        response.data.user.habits.forEach(async (id: any) => {
+            const found = await axios.get(`/api/habits/getone/${id}`);
+            
+            if (found.status === 200) {
+                setHabits([...habits, found.data.data.habit]);
+            }
+        });
+        // setHabits(response.data.user.habits);
         setLoading(false);
+        // console.log(response);
     };
 
     /*
@@ -48,7 +57,7 @@ export default function HabitsPage() {
 
                     {habits.map(habit => {
                         return (
-                            <li>{habit}</li>
+                            <li key={habit._id}>{habit._id}</li>
                         );
                     })}
                 </ul>
