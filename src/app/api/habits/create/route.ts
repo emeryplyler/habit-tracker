@@ -32,13 +32,19 @@ export async function POST(request: NextRequest) {
             user: userID
         });
 
-        const savedHabit = await newHabit.save();
+        // const savedHabit = await newHabit.save();
+        await newHabit.save();
+        console.log("new habit: " + newHabit);
         // also insert new habit into user's habits array
-        const userUpdate = await User.findByIdAndUpdate(userID, { $push: { habits: savedHabit._id } });
-        console.log(userUpdate);
+        // const userUpdate = await User.findByIdAndUpdate(userID, { $push: { habits: savedHabit._id } });
+        user.habits.push(newHabit._id); // push to user's habits array
+        await user.save(); // wait for user info to update
+
+        console.log("new user: " + user);
 
         return NextResponse.json(
-            { message: "Habit created successfully", data: savedHabit },
+            // { message: "Habit created successfully", data: savedHabit },
+            { message: "Habit created succesfully", data: newHabit },
             { status: 201 }
         );
 

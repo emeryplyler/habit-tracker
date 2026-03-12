@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { habitSchema } from "@/models/habitModel"
+import { habitSchema } from "@/models/habitModel";
 
 const userSchema = new mongoose.Schema({
     username: {
@@ -24,7 +24,10 @@ const userSchema = new mongoose.Schema({
     forgotPasswordTokenExpiry: Date,
     verifyToken: String,
     verifyTokenExpiry: Date,
-    habits: [habitSchema]
+    habits: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Habit"
+    }]
 });
 
 const User = mongoose.model("user", userSchema);

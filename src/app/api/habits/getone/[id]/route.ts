@@ -12,7 +12,6 @@ export async function GET(request: NextRequest, { params }: { params: { id: mong
 
     try {
         const habit = await Habit.findById(id);
-
         return NextResponse.json(
             { message: "Habit found", data: habit },
             { status: 200 }

@@ -23,9 +23,9 @@ export default function HabitsPage() {
         // retrieve information about each habit
         response.data.user.habits.forEach(async (id: any) => {
             const found = await axios.get(`/api/habits/getone/${id}`);
-            
-            if (found.status === 200) {
-                setHabits([...habits, found.data.data.habit]);
+            if (found.status === 200 && found.data.data) {
+                // setHabits([...habits, found.data.data]);
+                setHabits(prev => [...prev, found.data.data]);
             }
         });
         // setHabits(response.data.user.habits);
@@ -56,9 +56,11 @@ export default function HabitsPage() {
                     {habits.length < 1 && (<div>No habits found</div>)}
 
                     {habits.map(habit => {
+
                         return (
                             <li key={habit._id}>{habit._id}</li>
                         );
+
                     })}
                 </ul>
             )}
