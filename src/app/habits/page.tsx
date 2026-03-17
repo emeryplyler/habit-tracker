@@ -4,9 +4,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-import { useAppContext } from "@/context";
-import User from "@/models/userModel";
 import Link from "next/link";
+import HabitsItem from "../components/HabitsItem";
 
 export default function HabitsPage() {
     const router = useRouter(); // get router so we can redirect user
@@ -15,22 +14,36 @@ export default function HabitsPage() {
 
     // instead of context, retrieve information from DB since we need to communicate with it anyway
     const [user, setUser] = useState();
-    const [habits, setHabits] = useState<any[]>([]); // type is unknown
+    const [habits, setHabits] = useState<any[]>([]); // type is array of any
 
     const getHabits = async () => {
-        const response = await axios.get("/api/users/me"); // retrieve user's information from api which calls DB
-        setUser(response.data.user);
-        // retrieve information about each habit
-        response.data.user.habits.forEach(async (id: any) => {
-            const found = await axios.get(`/api/habits/getone/${id}`);
-            if (found.status === 200 && found.data.data) {
-                // setHabits([...habits, found.data.data]);
-                setHabits(prev => [...prev, found.data.data]);
+        try {
+            // try to get current user
+            const response = await axios.get("/api/users/me"); // retrieve user's information from api which calls DB
+            if (response.status === 400) {
+                toast.error("User not found - please re-log in");
+                return;
             }
-        });
-        // setHabits(response.data.user.habits);
-        setLoading(false);
-        // console.log(response);
+            setUser(response.data.user);
+            // retrieve information about each habit
+            // Use Promise.all to wait for all async operations
+            const habitPromises = response.data.user.habits.map(async (id: any) => {
+                const found = await axios.get(`/api/habits/getone/${id}`);
+                // if habit is successfully found, return it, otherwise return null
+                return found.status === 200 && found.data.data ? found.data.data : null;
+            });
+            // wait for all habit retrievals to complete
+            const habitResults = await Promise.all(habitPromises);
+            // Filter out nulls and set habits
+            const validHabits = habitResults.filter(habit => habit !== null);
+            setHabits(validHabits);
+            setLoading(false); // finish loading
+        } catch (error: any) {
+            toast.error(error.message);
+        } finally {
+            setLoading(false);
+        }
+
     };
 
     /*
@@ -45,6 +58,27 @@ export default function HabitsPage() {
         getHabits(); // retrieve user's habits on page load
     }, []);
 
+    const incrementCount = (habitId: string) => {
+        setHabits(prevHabits =>
+            prevHabits.map(habit => {
+                if (habit._id === habitId) {
+                    return { ...habit, completeCount: habit.completeCount + 1 };
+                }
+                return habit;
+            })
+        );
+    };
+
+    const incrementCountDB = async (habitId: string) => {
+        try {
+            // placeholder
+            // TODO: make API call
+            console.log("increment completecount");
+        } catch (error: any) {
+            toast.error(error.message);
+        }
+    }
+
     return (
         <div>
             <h1>Habits</h1>
@@ -58,12 +92,22 @@ export default function HabitsPage() {
                     {habits.map(habit => {
 
                         return (
-                            <li key={habit._id}>{habit._id}</li>
+                            <HabitsItem
+                                key={habit._id}
+                                name={habit.name}
+                                description={habit.description}
+                                frequency={habit.frequency}
+                                goalCount={habit.goalCount}
+                                completeCount={habit.completeCount}
+                                habitId={habit._id}
+                                cb={incrementCount}>
+                            </HabitsItem>
                         );
 
                     })}
                 </ul>
             )}
+            <Toaster />
         </div>
     );
 }
