@@ -58,7 +58,8 @@ export default function HabitsPage() {
         getHabits(); // retrieve user's habits on page load
     }, []);
 
-    const incrementCount = (habitId: string) => {
+    const incrementCount = async (habitId: string) => {
+        // Optimistically update local state
         setHabits(prevHabits =>
             prevHabits.map(habit => {
                 if (habit._id === habitId) {
@@ -67,17 +68,30 @@ export default function HabitsPage() {
                 return habit;
             })
         );
+
+        try {
+            await incrementCountDB(habitId); // Wait for DB update
+        } catch (error) {
+            // Revert local state on failure
+            setHabits(prevHabits =>
+                prevHabits.map(habit => {
+                    if (habit._id === habitId) {
+                        return { ...habit, completeCount: habit.completeCount - 1 };
+                    }
+                    return habit;
+                })
+            );
+            toast.error("Failed to update habit online");
+        }
     };
 
     const incrementCountDB = async (habitId: string) => {
-        try {
-            // placeholder
-            // TODO: make API call
-            console.log("increment completecount");
-        } catch (error: any) {
-            toast.error(error.message);
+        // update completeCount in DB by sending increment value
+        const response = await axios.patch(`/api/habits/updateone/${habitId}`, { completeCount: { increment: 1 } }); // send increment value in request body
+        if (response.status !== 200) {
+            throw new Error("Failed to update habit online");
         }
-    }
+    };
 
     return (
         <div>
