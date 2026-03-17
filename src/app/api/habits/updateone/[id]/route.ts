@@ -19,19 +19,41 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
             );
         }
 
+        // prepare update operations object
+        // for a request body like this: { name: "new name", completeCount: { increment: 1 } }
+        // {
+        //     $set: { name: "new name" },
+        //     $inc: { completeCount: 1 }
+        // }
+        const updateOps: any = {};
+
         // validate update fields
+        // updates should be sent as an object with fields as keys and modify values as values
+        // e.g. { name: "new name", completeCount: { increment: 1 } }
         const allowedUpdates = ["name", "description", "frequency", "goalCount", "completeCount"];
-        const invalidFields = Object.keys(updates).filter(key => !allowedUpdates.includes(key)); // filter out invalid fields
-        if (invalidFields.length > 0) {
-            return NextResponse.json(
-                { error: `Invalid update fields: ${invalidFields.join(", ")}` },
-                { status: 400 }
-            );
+        for (const [key, value] of Object.entries(updates)) {
+            if (!allowedUpdates.includes(key)) {
+                return NextResponse.json(
+                    { error: `Invalid field: ${key}` },
+                    { status: 400 }
+                );
+            }
+
+            if (key === "completeCount" && typeof value === "object" && value !== null && "increment" in value) {
+                // handle increment operation for completeCount
+                // value is an object with a key "increment" and a number value
+                // it's all to extract the increment value from the request body
+                updateOps.$inc = { completeCount: (value as {increment: number}).increment }; // use $inc operator for increments
+            } else {
+                // directly set other fields
+                if (!updateOps.$set) updateOps.$set = {};
+                updateOps.$set[key] = value;
+            }
         }
 
-        // check if habit exists
+        // try to apply updates
         // use new: true to return document AFTER update is applied
-        const updatedHabit = await Habit.findByIdAndUpdate(id, updates, { new: true });
+        const updatedHabit = await Habit.findByIdAndUpdate(id, updateOps, { new: true });
         if (!updatedHabit) {
             return NextResponse.json(
                 { error: "Habit not found" },
