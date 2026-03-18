@@ -12,6 +12,13 @@ export async function GET(request: NextRequest, { params }: { params: { id: mong
 
     try {
         const habit = await Habit.findById(id);
+        if (!habit) {
+            return NextResponse.json(
+                { error: "Habit not found" },
+                { status: 404 }
+            );
+        }
+
         return NextResponse.json(
             { message: "Habit found", data: habit },
             { status: 200 }
@@ -20,7 +27,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: mong
     } catch (error: any) {
         return NextResponse.json(
             { error: error.message },
-            { status: 400 }
+            { status: 500 }
         );
     }
 }

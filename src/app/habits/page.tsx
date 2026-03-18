@@ -71,6 +71,7 @@ export default function HabitsPage() {
 
         try {
             await incrementCountDB(habitId); // Wait for DB update
+            toast.success("Good work!");
         } catch (error) {
             // Revert local state on failure
             setHabits(prevHabits =>
@@ -114,7 +115,7 @@ export default function HabitsPage() {
                                 goalCount={habit.goalCount}
                                 completeCount={habit.completeCount}
                                 habitId={habit._id}
-                                cb={incrementCount}>
+                                incrementComplete={incrementCount}>
                             </HabitsItem>
                         );
 
