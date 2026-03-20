@@ -12,7 +12,6 @@ export async function POST(request: NextRequest) {
     try {
         const reqBody = await request.json();
         const { username, password, email } = reqBody;
-        console.log(reqBody); // TODO: remove in production build
 
         // does user already exist?
         const user = await User.findOne({ email });
@@ -44,7 +43,8 @@ export async function POST(request: NextRequest) {
         );
 
     } catch (error: any) {
-        return NextResponse.json({ error: error.message },
+        console.log(error)
+        return NextResponse.json({ error: error.errors },
             { status: 500 });
     }
 }

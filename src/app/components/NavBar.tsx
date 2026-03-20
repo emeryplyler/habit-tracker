@@ -27,10 +27,6 @@ const NavBar = () => {
             link: "/"
         },
         {
-            name: "Account",
-            link: "/account"
-        },
-        {
             name: "Sign Up",
             link: "/signup"
         },

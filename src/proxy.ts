@@ -21,6 +21,8 @@ export function proxy(request: NextRequest) {
         // user is not logged in, so they can't visit this path; prompt user to log in
         return NextResponse.redirect(new URL("/login", request.nextUrl));
     }
+
+    return NextResponse.next();
 }
 
 export const config = {
@@ -29,6 +31,8 @@ export const config = {
         "/account",
         "/account/:id*",
         "/login",
-        "/signup"
+        "/signup",
+        "/habits",
+        "/habits/:id*"
     ]
 };

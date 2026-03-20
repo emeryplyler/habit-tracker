@@ -1,7 +1,7 @@
 "use client"; // now this is a client component
 import axios from "axios";
 import Link from "next/link";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useAppContext } from "@/context";
@@ -20,7 +20,16 @@ export default function AccountPage() {
             const res = await axios.get("/api/users/me"); // retrieve user's information from api, which calls DB
             setUser(res.data.user._id);
         } catch (error: any) {
-            toast.error(error.message);
+            if (error.response && error.response.status === 400) {
+                toast.error("User not found - redirecting to login page");
+                setTimeout(() => {
+                    router.push("/login");
+                }, 3000);
+
+            } else {
+                toast.error(error.message);
+            }
+
         } finally {
             setLoading(false);
         }
@@ -54,6 +63,7 @@ export default function AccountPage() {
                     <button onClick={logout}>Log Out</button>
                 </>)}
             </div>
+            <Toaster />
         </div>
     );
 }
