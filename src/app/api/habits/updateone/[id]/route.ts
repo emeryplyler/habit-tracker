@@ -9,7 +9,14 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
     try {
         // retrieve habit id from path params
         const { id } = await params; // note: params requires await
-        const updates = await request.json(); // retrieve updates from request body
+        // const body = await request.json(); // retrieve updates from request body
+        // const updates = {} as any;
+        // for (const [key, value] of Object.entries(body)) {
+        //     if (key !== "_id" && key !== "user" && key !== "__v") { // don't allow updates to these fields
+        //         updates[key] = value;
+        //     }
+        // }
+        const updates = await request.json();
 
         // validate object id; if not valid, don't bother querying
         if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -30,13 +37,15 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
         // validate update fields
         // updates should be sent as an object with fields as keys and modify values as values
         // e.g. { name: "new name", completeCount: { increment: 1 } }
-        const allowedUpdates = ["name", "description", "frequency", "goalCount", "completeCount"];
+        const allowedUpdates = ["name", "description", "frequency", "notes", "difficulty", "goalCount", "completeCount"];
         for (const [key, value] of Object.entries(updates)) {
             if (!allowedUpdates.includes(key)) {
-                return NextResponse.json(
-                    { error: `Invalid field: ${key}` },
-                    { status: 400 }
-                );
+                // console.log(updates)
+                // return NextResponse.json(
+                //     { error: `Invalid field: ${key}` },
+                //     { status: 400 }
+                // );
+                continue; // skip invalid fields
             }
 
             if (key === "completeCount" && typeof value === "object" && value !== null && "increment" in value) {

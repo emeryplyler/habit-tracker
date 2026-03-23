@@ -3,13 +3,14 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 export default function HabitEditPage() {
     const { id } = useParams(); // params is a promise, so anything depending on params has to be in an async function
     // retrieve habit information from DB using id, then display it and allow user to edit it
     const [habit, setHabit] = useState<any>();
     const [loading, setLoading] = useState(true);
+    const router = useRouter();
 
     const getHabit = async () => {
         try {
@@ -29,6 +30,16 @@ export default function HabitEditPage() {
 
     const updateHabit = async () => {
         // call db and update
+        try {
+            const response = await axios.patch(`/api/habits/updateone/${id}`, habit);
+            if (response.status !== 200) {
+                throw new Error("Failed to update habit");
+            }
+            router.push("/habits"); // redirect to habits page after update
+            toast.success("Habit updated successfully");
+        } catch (error: any) {
+            toast.error("Failed to update habit: " + error.message);
+        }
     }
 
     useEffect(() => { getHabit(); }, []); // retrieve habit on page load
