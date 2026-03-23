@@ -1,5 +1,16 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import jwt from "jsonwebtoken";
+
+// token validation function
+function isValidToken(token: string) {
+    try {
+        jwt.verify(token, process.env.JWT_SECRET!);
+        return true;
+    } catch (error) {
+        return false;
+    }
+}
 
 export function proxy(request: NextRequest) {
     // return NextResponse.redirect(new URL("/", request.url))
@@ -8,16 +19,17 @@ export function proxy(request: NextRequest) {
 
     const isPublicPath = path === "/login" || path === "/signup" || path === "/";
 
-    const token = request.cookies.get("token")?.value || ""; // is user logged in? token will either equal nothing (logged out) or the token (logged in)
+    const token = request.cookies.get("token")?.value || "";
+    const validToken = isValidToken(token);
 
-    if (isPublicPath && token) { // NOTE: for some reason, if you take out the '&& token' part it doesn't redirect correctly and firefox won't show it to me
+    if (isPublicPath && validToken) { // NOTE: for some reason, if you take out the '&& token' part it doesn't redirect correctly and firefox won't show it to me
         // user can visit public path
         if (path != "/") {
             return NextResponse.redirect(new URL("/", request.nextUrl));
         }
     }
 
-    if (!isPublicPath && !token) {
+    if (!isPublicPath && !validToken) {
         // user is not logged in, so they can't visit this path; prompt user to log in
         return NextResponse.redirect(new URL("/login", request.nextUrl));
     }

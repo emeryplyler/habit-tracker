@@ -1,26 +1,34 @@
-"use client"
+"use client";
 
 import React, { useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useAppContext } from "@/context";
 
 const NavBar = () => {
     const router = useRouter();
+    const pathname = usePathname(); // get current pathname to trigger useEffect when it changes
     // fetch what user this is
     let { currentUser, setCurrentUser } = useAppContext();
 
     const getUserDetails = async () => {
-        const res = await axios.get("/api/users/me"); // retrieve user's information from api, which calls DB
-        setCurrentUser({ username: res.data.user.username });
+        try {
+            const res = await axios.get("/api/users/me"); // retrieve user's information from api, which calls DB
+            setCurrentUser({ username: res.data.user.username });
+        } catch (error: any) {
+            setCurrentUser(undefined);
+        }
+
     };
 
     useEffect(() => {
+        // called when user tries to go to a different page
+        // if user's login has expired, the navbar will update to show the logged-out version
         getUserDetails();
-    }, []);
-    
+    }, [pathname]);
+
     const menuItems = [
         {
             name: "Home",
@@ -49,7 +57,7 @@ const NavBar = () => {
             name: "Habits",
             link: "/habits"
         }
-    ]
+    ];
 
     const logout = async () => {
         try {
