@@ -10,13 +10,12 @@ export async function POST(request: NextRequest) {
     try {
         const reqBody = await request.json();
         const { username, password } = reqBody; // get email and password from request body
-        console.log(reqBody); // TODO: remove in production build
 
         // does user exist?
         const user = await User.findOne({ username });
         if (!user) {
             return NextResponse.json(
-                { error: "No user found with that email" },
+                { error: "No user found with that username" },
                 { status: 400 }
             );
         }

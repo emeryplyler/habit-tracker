@@ -24,16 +24,13 @@ export default function LoginPage() {
         try {
             setLoading(true); // hide behind loading screen
             const response = await axios.post("/api/users/login", user); // make axios post request to our api using entered username and password
-            if (response.status !== 200 || !response.data.data) {
-                throw new Error("Login failed - please check your credentials and try again");
-            }
             // if post request fails, will enter catch statement; otherwise, this:
-            toast.success("Login successful");
             // set current user in context to display later on:
             setCurrentUser({ ...currentUser, username: response.data.data.username });
             router.push("/"); // redirect user to homepage, now logged in
+            toast.success("Login successful");
         } catch (error: any) {
-            toast.error(error.message)
+            toast.error(error.response.data.error)
         } finally {
             setLoading(false);
         }
@@ -70,12 +67,16 @@ export default function LoginPage() {
                 placeholder="Password"
             />
 
-            <button
-                // when button clicked, call onSignup function
-                onClick={onLogin}
-            >
-                Log In
-            </button>
+            {!loading && (
+                <button
+                    // when button clicked, call onSignup function
+                    onClick={onLogin}
+                >
+                    Log In
+                </button>                
+            )}
+
+            {loading && <p>Loading...</p>}
 
             <Link href={"/signup"}>Create an account</Link>
             <Toaster />
