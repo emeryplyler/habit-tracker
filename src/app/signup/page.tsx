@@ -15,76 +15,80 @@ export default function SignupPage() {
     });
     // stateful var to track button status
     const [buttonDisabled, setButtonDisabled] = React.useState(false);
-    const [loading, setLoading] = React.useState(true);
+    const [loading, setLoading] = React.useState(false);
 
     // signup function called by sign up event
     const onSignup = async () => {
         try {
             setLoading(true); // hide behind loading screen
             const response = await axios.post("/api/users/signup", user); // make post request to api using stateful object var
-            if (response.status === 500) {
-                console.log(response)
-                throw new Error("Signup failed - please try again");
-            }
+
+            router.push("/login"); // redirect user to login page
             toast.success("Signup successful!");
-            router.push("/"); // redirect user to home page
         } catch (error: any) {
-            toast.error(error.message);
+            toast.error(error.response.data.error);
         } finally {
             setLoading(false);
         }
     };
 
     useEffect(() => {
-        if (user.email.length > 0 && user.password.length> 0 && user.username.length > 0) {
+        if (user.email.length > 0 && user.password.length > 0 && user.username.length > 0) {
             setButtonDisabled(false); // enable button
         } else {
             setButtonDisabled(true);
         }
-    }, [user])
+    }, [user]);
 
     return (
         <div>
             <h1>Create an account</h1>
             <hr />
-            <label htmlFor="username">Username</label>
-            <input
-                id="username"
-                type="text"
-                value={user.username}
-                // when the value of input is changed, call setUser; keep prev user values ..., change username (spread operator)
-                onChange={(e) => setUser({ ...user, username: e.target.value })}
-                placeholder="Username"
-            />
+            <form action={onSignup}>
+                <label htmlFor="username">Username</label>
+                <input
+                    id="username"
+                    type="text"
+                    value={user.username}
+                    // when the value of input is changed, call setUser; keep prev user values ..., change username (spread operator)
+                    onChange={(e) => setUser({ ...user, username: e.target.value })}
+                    placeholder="Username"
+                    required
+                />
 
-            <label htmlFor="password">Password</label>
-            <input
-                id="password"
-                type="password"
-                value={user.password}
-                onChange={(e) => setUser({ ...user, password: e.target.value })}
-                placeholder="Password"
-            />
+                <label htmlFor="password">Password</label>
+                <input
+                    id="password"
+                    type="password"
+                    value={user.password}
+                    onChange={(e) => setUser({ ...user, password: e.target.value })}
+                    placeholder="Password"
+                    required
+                />
 
-            <label htmlFor="email">Email</label>
-            <input
-                id="email"
-                type="text"
-                value={user.email}
-                onChange={(e) => setUser({ ...user, email: e.target.value })}
-                placeholder="Email"
-            />
+                <label htmlFor="email">Email</label>
+                <input
+                    id="email"
+                    type="text"
+                    value={user.email}
+                    onChange={(e) => setUser({ ...user, email: e.target.value })}
+                    placeholder="Email"
+                    required
+                />
 
-            {/* TODO: replace the button with "Loading..." when loading */}
-            <button
-                // when button clicked, call onSignup function
-                onClick={onSignup}
-                className="signUpButton"
-            >
-                {/* TODO: make this just gray out the button instead of changing text */}
-                {/* {buttonDisabled ? "No signup" : "Sign Up"}  */}
-                Sign Up
-            </button>
+                {/* TODO: replace the button with "Loading..." when loading */}
+                {!loading && (
+                    <button className="signUpButton">
+                        Sign Up
+                    </button>                    
+                )}
+
+                {loading && <p>Loading...</p>}
+
+            </form>
+
+
+
 
             <Link href={"/login"}>Log in instead</Link>
 
