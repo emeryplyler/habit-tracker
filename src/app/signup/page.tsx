@@ -13,8 +13,7 @@ export default function SignupPage() {
         password: "",
         email: ""
     });
-    // stateful var to track button status
-    const [buttonDisabled, setButtonDisabled] = React.useState(false);
+
     const [loading, setLoading] = React.useState(false);
 
     // signup function called by sign up event
@@ -31,14 +30,6 @@ export default function SignupPage() {
             setLoading(false);
         }
     };
-
-    useEffect(() => {
-        if (user.email.length > 0 && user.password.length > 0 && user.username.length > 0) {
-            setButtonDisabled(false); // enable button
-        } else {
-            setButtonDisabled(true);
-        }
-    }, [user]);
 
     return (
         <div>
@@ -80,18 +71,13 @@ export default function SignupPage() {
                 {!loading && (
                     <button className="signUpButton">
                         Sign Up
-                    </button>                    
+                    </button>
                 )}
 
                 {loading && <p>Loading...</p>}
 
             </form>
-
-
-
-
             <Link href={"/login"}>Log in instead</Link>
-
             <Toaster />
         </div>
     );
