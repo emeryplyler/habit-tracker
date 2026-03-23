@@ -57,11 +57,11 @@ export default function HabitEditPage() {
 
                     <p>Frequency
                         <label>
-                            <input type="radio" name="frequency" value="daily" onChange={() => setHabit({ ...habit, frequency: "daily" })} />
+                            <input type="radio" name="frequency" value="daily" checked={habit.frequency === "daily"} onChange={() => setHabit({ ...habit, frequency: "daily" })} />
                             Daily
                         </label>
                         <label>
-                            <input type="radio" name="frequency" value="weekly" onChange={() => setHabit({ ...habit, frequency: "weekly" })} />
+                            <input type="radio" name="frequency" value="weekly" checked={habit.frequency === "weekly"} onChange={() => setHabit({ ...habit, frequency: "weekly" })} />
                             Weekly
                         </label>
                     </p>
