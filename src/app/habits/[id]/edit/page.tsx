@@ -62,7 +62,7 @@ export default function HabitEditPage() {
                     <label htmlFor="description">Description</label>
                     <textarea
                         id="description"
-                        value={habit.description}
+                        value={habit.description || ""}
                         onChange={(e) => setHabit({ ...habit, description: e.target.value })}
                     />
 
@@ -80,7 +80,7 @@ export default function HabitEditPage() {
                     <label htmlFor="notes">Notes</label>
                     <textarea
                         id="notes"
-                        value={habit.notes}
+                        value={habit.notes || ""}
                         onChange={(e) => setHabit({ ...habit, notes: e.target.value })}
                     />
 
