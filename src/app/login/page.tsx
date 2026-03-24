@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-import { useAppContext } from "@/context";
 
 export default function LoginPage() {
     const router = useRouter(); // get router so we can redirect user
@@ -16,8 +15,6 @@ export default function LoginPage() {
 
     const [buttonDisabled, setButtonDisabled] = useState(false);
     const [loading, setLoading] = useState(false); // technically not loading until page logic starts
-
-    const { currentUser, setCurrentUser } = useAppContext();
     
     // log in function called when login button pressed
     const onLogin = async () => {
@@ -25,8 +22,6 @@ export default function LoginPage() {
             setLoading(true); // hide behind loading screen
             const response = await axios.post("/api/users/login", user); // make axios post request to our api using entered username and password
             // if post request fails, will enter catch statement; otherwise, this:
-            // set current user in context to display later on:
-            setCurrentUser({ ...currentUser, username: response.data.data.username });
             router.push("/"); // redirect user to homepage, now logged in
             toast.success("Login successful");
         } catch (error: any) {

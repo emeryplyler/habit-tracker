@@ -4,14 +4,11 @@ import Link from "next/link";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useAppContext } from "@/context";
 
 export default function AccountPage() {
     const router = useRouter();
     // loading
     const [loading, setLoading] = useState(true);
-    // context
-    const { setCurrentUser } = useAppContext();
 
     // get account information
     const [user, setUser] = useState();
@@ -45,7 +42,6 @@ export default function AccountPage() {
         try {
             await axios.get("/api/users/logout"); // send get request to this path
             toast.success("Logout successful");
-            setCurrentUser(undefined);
             router.push("/"); // redirect to homepage
         } catch (error: any) {
             toast.error(error.message);
