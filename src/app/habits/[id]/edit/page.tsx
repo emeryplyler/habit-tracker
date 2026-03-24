@@ -98,7 +98,7 @@ export default function HabitEditPage() {
                     <input
                         id="goal"
                         type="number"
-                        value={habit.goalCount}
+                        value={habit.goalCount || 0}
                         onChange={(e) => setHabit({ ...habit, goalCount: parseInt(e.target.value) })}
                     />
 

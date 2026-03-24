@@ -1,5 +1,5 @@
 import { connect } from "@/dbConfig/dbConfig";
-import { getDataFromToken } from "@/helpers/getDataFromToken";
+import { getDataFromToken } from "@/services/getDataFromToken";
 import { Habit } from "@/models/habitModel";
 import User from "@/models/userModel";
 import { NextRequest, NextResponse } from "next/server";

@@ -1,17 +1,8 @@
 "use client";
 
 import Link from 'next/link';
-import styles from "./HabitsItem.module.css"
-
-interface HabitsItemProps {
-    name: string,
-    description: string,
-    frequency: string,
-    goalCount: number,
-    completeCount: number,
-    habitId: string,
-    incrementComplete: (habitId: string) => void;
-}
+import styles from "../styles/HabitsItem.module.css"
+import { HabitsItemProps } from '@/types/Habits';
 
 const HabitsItem = ({ name, description, frequency, goalCount, completeCount, habitId, incrementComplete }: HabitsItemProps) => {
     const increment = () => incrementComplete(habitId);

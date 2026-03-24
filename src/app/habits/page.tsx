@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import Link from "next/link";
-import HabitsItem from "../components/HabitsItem";
+import HabitsItem from "../../components/HabitsItem";
 
 export default function HabitsPage() {
     const router = useRouter(); // get router so we can redirect user
