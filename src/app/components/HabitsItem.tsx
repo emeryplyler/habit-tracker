@@ -1,6 +1,7 @@
 "use client";
 
 import Link from 'next/link';
+import styles from "./HabitsItem.module.css"
 
 interface HabitsItemProps {
     name: string,
@@ -15,13 +16,13 @@ interface HabitsItemProps {
 const HabitsItem = ({ name, description, frequency, goalCount, completeCount, habitId, incrementComplete }: HabitsItemProps) => {
     const increment = () => incrementComplete(habitId);
     return (
-        <li className="habits-item">
+        <li className={styles.habit}>
             <h3>{name}</h3>
             <p>{frequency}</p>
             <p>{description}</p>
             <p>Completed {completeCount} out of {goalCount}</p>
-            <Link href={`/habits/${habitId}/edit`}>Edit</Link>
-            <button className="habit-increment-button" onClick={increment}>I just did this</button>
+            <Link className={styles.edit} href={`/habits/${habitId}/edit`}>Edit</Link>
+            <button className={styles.button} onClick={increment}>I just did this</button>
         </li>
     );
 };

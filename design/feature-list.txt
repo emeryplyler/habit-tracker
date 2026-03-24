@@ -6,3 +6,5 @@
     - edit one
     - delete one
 - detect if user has met goal
+
+- default/preset goals to pick?

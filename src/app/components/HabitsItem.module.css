@@ -1,0 +1,19 @@
+/* names here are locally scoped */
+
+.habit {
+    /* display: flex; */
+    align-items: center;
+    justify-content: space-around;
+    padding: 10px;
+}
+
+.button, .edit {
+    margin: 10px;
+    padding: 5px 10px;
+    background-color: #3c6ba0;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
