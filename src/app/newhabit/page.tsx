@@ -31,7 +31,7 @@ export default function HabitsPage() {
             // redirect user to /habits
             toast.success("Habit created!");
             router.push("/habits");
-            console.log(habit); // TODO: remove            
+            console.debug(response);
         } catch (error: any) {
             toast.error(error.message);
         } finally {

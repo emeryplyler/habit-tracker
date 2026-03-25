@@ -1,5 +1,4 @@
 import { connect } from "@/dbConfig/dbConfig";
-import { getDataFromToken } from "./getDataFromToken";
 import { HabitModel } from "@/models/habitModel";
 import UserModel from "@/models/userModel";
 import { Habit } from "@/types/Habits";
@@ -8,52 +7,32 @@ connect();
 
 // POST
 export async function createHabit(newHabit: Habit) {
-    // try {
-    //     const userID = await getDataFromToken(request);
-    //     // use request body to fill in new habit parameters
-    //     const reqBody = await request.json();
-    //     const { name, description, frequency, notes, difficulty, goalCount } = reqBody;
-    //     const user = await UserModel.findById(userID);
+    const user = await UserModel.findById(newHabit.userId);
 
-    //     if (!userID || !user) {
-    //         return NextResponse.json(
-    //             { error: "Couldn't verify user is logged in" },
-    //             { status: 400 }
-    //         );
-    //     }
+    if (!newHabit.userId || !user) {
+        throw new Error("Couldn't verify user is logged in");
+    }
 
-    //     const newHabit = new Habit({
-    //         name,
-    //         description,
-    //         frequency,
-    //         notes,
-    //         difficulty,
-    //         goalCount,
-    //         completeCount: 0,
-    //         user: userID
-    //     });
+    const newHabitModel = new HabitModel({
+        name: newHabit.name,
+        description: newHabit.description,
+        frequency: newHabit.frequency,
+        notes: newHabit.notes,
+        difficulty: newHabit.difficulty,
+        goalCount: newHabit.goalCount,
+        completeCount: 0,
+        user: newHabit.userId
+    });
 
-    //     // const savedHabit = await newHabit.save();
-    //     await newHabit.save();
-    //     console.log("new habit: " + newHabit);
-    //     // also insert new habit into user's habits array
-    //     // const userUpdate = await UserModel.findByIdAndUpdate(userID, { $push: { habits: savedHabit._id } });
-    //     user.habits.push(newHabit._id); // push to user's habits array
-    //     await user.save(); // wait for user info to update
+    // const savedHabit = await newHabit.save();
+    await newHabitModel.save();
 
-    //     console.log("new user: " + user);
+    // also insert new habit into user's habits array
+    // const userUpdate = await UserModel.findByIdAndUpdate(userID, { $push: { habits: savedHabit._id } });
+    user.habits.push(newHabitModel._id); // push to user's habits array
+    await user.save(); // wait for user info to update
+    // TODO: transaction
 
-    //     return NextResponse.json(
-    //         // { message: "Habit created successfully", data: savedHabit },
-    //         { message: "Habit created succesfully", data: newHabit },
-    //         { status: 201 }
-    //     );
-
-    // } catch (error: any) {
-    //     return NextResponse.json(
-    //         { error: error.message },
-    //         { status: 400 }
-    //     );
-    // }
+    return newHabitModel;
 }
 

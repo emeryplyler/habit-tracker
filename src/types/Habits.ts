@@ -10,12 +10,14 @@ export interface HabitsItemProps {
 }
 
 export interface Habit {
+    id?: string,
     name: string,
     description?: string,
     frequency: string,
     notes?: string,
     difficulty: number,
-    goalCount: number
+    goalCount: number,
+    userId: string,
 }
 
 export enum goalStatuses {
