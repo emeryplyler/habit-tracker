@@ -1,5 +1,5 @@
 import { connect } from "@/dbConfig/dbConfig";
-import { Habit } from "@/models/habitModel";
+import { HabitModel } from "@/models/habitModel";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -62,7 +62,7 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
 
         // try to apply updates
         // use new: true to return document AFTER update is applied
-        const updatedHabit = await Habit.findByIdAndUpdate(id, updateOps, { returnDocument: "after" });
+        const updatedHabit = await HabitModel.findByIdAndUpdate(id, updateOps, { returnDocument: "after" });
         if (!updatedHabit) {
             return NextResponse.json(
                 { error: "Habit not found" },

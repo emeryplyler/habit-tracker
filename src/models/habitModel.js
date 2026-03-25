@@ -29,6 +29,6 @@ const habitSchema = new mongoose.Schema({
     }
 });
 
-const Habit = mongoose.model("habit", habitSchema);
+const HabitModel = mongoose.model("habit", habitSchema);
 
-export { Habit, habitSchema };
+export { HabitModel, habitSchema };

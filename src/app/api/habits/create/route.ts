@@ -1,6 +1,6 @@
 import { connect } from "@/dbConfig/dbConfig";
 import { getDataFromToken } from "@/services/getDataFromToken";
-import { Habit } from "@/models/habitModel";
+import { HabitModel } from "@/models/habitModel";
 import User from "@/models/userModel";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        const newHabit = new Habit({
+        const newHabit = new HabitModel({
             name,
             description,
             frequency,

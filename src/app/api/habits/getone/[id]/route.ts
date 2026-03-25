@@ -1,5 +1,5 @@
 import { connect } from "@/dbConfig/dbConfig";
-import { Habit } from "@/models/habitModel";
+import { HabitModel } from "@/models/habitModel";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -11,7 +11,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: mong
     const { id } = await params;
 
     try {
-        const habit = await Habit.findById(id);
+        const habit = await HabitModel.findById(id);
         if (!habit) {
             return NextResponse.json(
                 { error: "Habit not found" },

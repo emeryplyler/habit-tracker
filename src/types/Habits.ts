@@ -9,6 +9,15 @@ export interface HabitsItemProps {
     goalStatus?: goalStatuses;
 }
 
+export interface newHabit {
+    name: string,
+    description?: string,
+    frequency: string,
+    notes?: string,
+    difficulty: number,
+    goalCount: number
+}
+
 export enum goalStatuses {
     INCOMPLETE = "incomplete",
     COMPLETE = "complete",
