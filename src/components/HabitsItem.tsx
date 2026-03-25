@@ -4,10 +4,11 @@ import Link from 'next/link';
 import styles from "../styles/HabitsItem.module.css"
 import { HabitsItemProps } from '@/types/Habits';
 
-const HabitsItem = ({ name, description, frequency, goalCount, completeCount, habitId, incrementComplete }: HabitsItemProps) => {
+const HabitsItem = ({ name, description, frequency, goalCount, completeCount, habitId, incrementComplete, goalStatus }: HabitsItemProps) => {
     const increment = () => incrementComplete(habitId);
+
     return (
-        <li className={styles.habit}>
+        <li className={`styles.habitItem styles.${goalStatus}`}>
             <h3>{name}</h3>
             <p>{frequency}</p>
             <p>{description}</p>

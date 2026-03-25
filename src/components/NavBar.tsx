@@ -5,6 +5,7 @@ import axios from "axios";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import { useRouter, usePathname } from "next/navigation";
+import styles from "../styles/NavBar.module.css";
 
 const NavBar = () => {
     const router = useRouter();
@@ -70,7 +71,7 @@ const NavBar = () => {
     };
 
     return (
-        <div className="navbar">
+        <div className={styles.navbar}>
             <div>
                 {currentUser && `Currently logged in as ${currentUser.username}`}
             </div>

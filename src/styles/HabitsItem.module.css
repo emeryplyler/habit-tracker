@@ -17,3 +17,12 @@
     cursor: pointer;
 }
 
+.incomplete {
+    border-color: #FFD700;
+}
+.complete {
+    border-color: #4CAF50;
+}
+.surpassed {
+    border-color: #006eff;
+}

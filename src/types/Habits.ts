@@ -6,4 +6,11 @@ export interface HabitsItemProps {
     completeCount: number,
     habitId: string,
     incrementComplete: (habitId: string) => void;
+    goalStatus?: goalStatuses;
+}
+
+export enum goalStatuses {
+    INCOMPLETE = "incomplete",
+    COMPLETE = "complete",
+    SURPASSED = "surpassed"
 }
