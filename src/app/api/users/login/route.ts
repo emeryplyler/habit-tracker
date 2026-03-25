@@ -1,5 +1,5 @@
 import { connect } from "@/dbConfig/dbConfig";
-import User from "@/models/userModel";
+import UserModel from "@/models/userModel";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
         const { username, password } = reqBody; // get email and password from request body
 
         // does user exist?
-        const user = await User.findOne({ username });
+        const user = await UserModel.findOne({ username });
         if (!user) {
             return NextResponse.json(
                 { error: "No user found with that username" },

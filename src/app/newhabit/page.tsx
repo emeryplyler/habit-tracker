@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-import User from "@/models/userModel";
+import UserModel from "@/models/userModel";
 
 export default function HabitsPage() {
     const router = useRouter(); // get router so we can redirect user

@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer";
-import User from "@/models/userModel";
+import UserModel from "@/models/userModel";
 import bcrypt from "bcryptjs";
 
 export const sendEmail = async ({ email, emailType, userID }: any) => {
@@ -9,10 +9,10 @@ export const sendEmail = async ({ email, emailType, userID }: any) => {
 
         if (emailType === "VERIFY") { // verify account
             // add a verifytoken to the user's data in the DB; it expires after the alotted time
-            await User.findByIdAndUpdate(userID, { verifyToken: hashedToken, verifyTokenExpiry: Date.now() + 3600000 });
+            await UserModel.findByIdAndUpdate(userID, { verifyToken: hashedToken, verifyTokenExpiry: Date.now() + 3600000 });
         } else if (emailType === "RESET") { // reset password
             // add a forgot password token to the user in DB
-            await User.findByIdAndUpdate(userID, { forgotPasswordToken: hashedToken, forgotPasswordTokenExpiry: Date.now() + 3600000 });
+            await UserModel.findByIdAndUpdate(userID, { forgotPasswordToken: hashedToken, forgotPasswordTokenExpiry: Date.now() + 3600000 });
         }
 
         // Looking to send emails in production? Check out our Email API/SMTP product!

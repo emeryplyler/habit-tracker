@@ -1,6 +1,6 @@
 import { connect } from "@/dbConfig/dbConfig";
 import { NextRequest, NextResponse } from "next/server";
-import User from "@/models/userModel";
+import UserModel from "@/models/userModel";
 
 connect(); // connect API route
 
@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
         const reqBody = await request.json();
         const { token } = reqBody;
 
-        const user = await User.findOne({
+        const user = await UserModel.findOne({
             verifyToken: token,
             verifyTokenExpiry: { $gt: Date.now() }
         });

@@ -1,7 +1,7 @@
 import { connect } from "@/dbConfig/dbConfig";
 import { getDataFromToken } from "@/services/getDataFromToken";
 import { HabitModel } from "@/models/habitModel";
-import User from "@/models/userModel";
+import UserModel from "@/models/userModel";
 import { NextRequest, NextResponse } from "next/server";
 
 connect();
@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
         // use request body to fill in new habit parameters
         const reqBody = await request.json();
         const { name, description, frequency, notes, difficulty, goalCount } = reqBody;
-        const user = await User.findById(userID);
+        const user = await UserModel.findById(userID);
 
         if (!userID || !user) {
             return NextResponse.json(

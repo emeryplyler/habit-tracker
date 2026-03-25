@@ -9,7 +9,7 @@ export interface HabitsItemProps {
     goalStatus?: goalStatuses;
 }
 
-export interface newHabit {
+export interface Habit {
     name: string,
     description?: string,
     frequency: string,
