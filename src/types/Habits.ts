@@ -17,6 +17,8 @@ export interface Habit {
     notes?: string,
     difficulty: number,
     goalCount: number,
+    completeCount: number,
+    incrementCompleteCount?: number,
     userId: string,
 }
 

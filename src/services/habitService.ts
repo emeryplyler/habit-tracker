@@ -6,7 +6,6 @@ import mongoose from "mongoose";
 
 connect();
 
-// POST
 export async function createHabit(newHabit: Habit) {
     const user = await UserModel.findById(newHabit.userId);
 
@@ -21,9 +20,9 @@ export async function createHabit(newHabit: Habit) {
         description: newHabit.description,
         frequency: newHabit.frequency,
         notes: newHabit.notes,
-        difficulty: newHabit.difficulty,
+        difficulty: newHabit.difficulty || 1,
         goalCount: newHabit.goalCount,
-        completeCount: 0,
+        completeCount: newHabit.completeCount || 0,
         user: newHabit.userId
     });
 
@@ -39,39 +38,44 @@ export async function createHabit(newHabit: Habit) {
     return newHabitModel;
 }
 
-export async function editHabit(habitId: string, updates: Partial<Habit>) {
+// for Habit objects, id and userId cannot be updated; if habitId is passed in, it's validated; if userId is passed in, it's ignored
+// Cannot specify both completeCount update and increment in the same request
+export async function editHabit(updates: Partial<Habit>) {
     // validate object id; if not valid, don't bother querying
+    const habitId = updates.id as string;
     if (!mongoose.Types.ObjectId.isValid(habitId)) {
         throw new Error("Invalid habit id");
     }
 
-    // prepare update operations object
-    // for a request body like this: { name: "new name", completeCount: { increment: 1 } }
-    // {
-    //     $set: { name: "new name" },
-    //     $inc: { completeCount: 1 }
-    // }
     const updateOps: any = {};
 
     // validate update fields
     // updates should be sent as an object with fields as keys and modify values as values
-    // e.g. { name: "new name", completeCount: { increment: 1 } }
-    const allowedUpdates = ["name", "description", "frequency", "notes", "difficulty", "goalCount", "completeCount"];
+    let isIncrement = false;
+    let isCompleteCountUpdate = false;
+    const allowedUpdates = ["name", "description", "frequency", "notes", "difficulty", "goalCount", "completeCount", "incrementCompleteCount"];
     for (const [key, value] of Object.entries(updates)) {
         if (!allowedUpdates.includes(key)) {
             continue; // skip invalid fields
         }
 
-        if (key === "completeCount" && typeof value === "object" && value !== null && "increment" in value) {
+        if (key === "incrementCompleteCount" && typeof value === "number") {
             // handle increment operation for completeCount
-            // value is an object with a key "increment" and a number value
-            // it's all to extract the increment value from the request body
-            updateOps.$inc = { completeCount: (value as { increment: number; }).increment }; // use $inc key for increments
+            updateOps.$inc = { completeCount: value }; // use $inc key for increments
+            isIncrement = true;
         } else {
+            if (key === "completeCount") {
+                isCompleteCountUpdate = true;
+            }
             // directly set other fields
             if (!updateOps.$set) updateOps.$set = {};
             updateOps.$set[key] = value;
         }
+    }
+
+    // validate
+    if (isIncrement && isCompleteCountUpdate) {
+        throw new Error("Cannot specify both completeCount update and increment in the same request");
     }
 
     // try to apply updates

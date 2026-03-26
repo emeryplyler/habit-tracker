@@ -88,7 +88,7 @@ export default function HabitsPage() {
 
     const incrementCountDB = async (habitId: string) => {
         // update completeCount in DB by sending increment value
-        const response = await axios.patch(`/api/habits/updateone/${habitId}`, { completeCount: { increment: 1 } }); // send increment value in request body
+        const response = await axios.patch(`/api/habits/updateone/${habitId}`, { incrementCompleteCount: 1 }); // send increment value in request body
         if (response.status !== 200) {
             throw new Error("Failed to update habit online");
         }

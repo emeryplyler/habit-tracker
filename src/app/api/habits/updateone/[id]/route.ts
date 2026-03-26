@@ -1,10 +1,6 @@
-import { connect } from "@/dbConfig/dbConfig";
-import { HabitModel } from "@/models/habitModel";
-import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 import { editHabit } from "@/services/habitService";
-
-connect();
+import { Habit } from "@/types/Habits";
 
 export async function PATCH(request: NextRequest, { params }: { params: { id: string; }; }) {
     try {
@@ -13,7 +9,12 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
         // retrieve updates from request body
         const updates = await request.json();
         // call service function to apply updates
-        const updatedHabit = await editHabit(id, updates);
+        const habitUpdates: Habit = {
+            id,
+            ...updates
+        }
+
+        const updatedHabit = await editHabit(habitUpdates);
 
         return NextResponse.json({
             message: "Habit updated successfully",
