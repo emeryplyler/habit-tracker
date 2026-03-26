@@ -17,6 +17,7 @@ export async function POST(request: NextRequest) {
             notes,
             difficulty,
             goalCount,
+            completeCount: 0,
             userId: userID
         }
 
