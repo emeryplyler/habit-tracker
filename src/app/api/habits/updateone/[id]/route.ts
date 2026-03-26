@@ -2,6 +2,7 @@ import { connect } from "@/dbConfig/dbConfig";
 import { HabitModel } from "@/models/habitModel";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
+import { editHabit } from "@/services/habitService";
 
 connect();
 
@@ -9,66 +10,10 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
     try {
         // retrieve habit id from path params
         const { id } = await params; // note: params requires await
-        // const body = await request.json(); // retrieve updates from request body
-        // const updates = {} as any;
-        // for (const [key, value] of Object.entries(body)) {
-        //     if (key !== "_id" && key !== "user" && key !== "__v") { // don't allow updates to these fields
-        //         updates[key] = value;
-        //     }
-        // }
+        // retrieve updates from request body
         const updates = await request.json();
-
-        // validate object id; if not valid, don't bother querying
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-            return NextResponse.json(
-                { error: "Invalid habit id" },
-                { status: 400 }
-            );
-        }
-
-        // prepare update operations object
-        // for a request body like this: { name: "new name", completeCount: { increment: 1 } }
-        // {
-        //     $set: { name: "new name" },
-        //     $inc: { completeCount: 1 }
-        // }
-        const updateOps: any = {};
-
-        // validate update fields
-        // updates should be sent as an object with fields as keys and modify values as values
-        // e.g. { name: "new name", completeCount: { increment: 1 } }
-        const allowedUpdates = ["name", "description", "frequency", "notes", "difficulty", "goalCount", "completeCount"];
-        for (const [key, value] of Object.entries(updates)) {
-            if (!allowedUpdates.includes(key)) {
-                // console.log(updates)
-                // return NextResponse.json(
-                //     { error: `Invalid field: ${key}` },
-                //     { status: 400 }
-                // );
-                continue; // skip invalid fields
-            }
-
-            if (key === "completeCount" && typeof value === "object" && value !== null && "increment" in value) {
-                // handle increment operation for completeCount
-                // value is an object with a key "increment" and a number value
-                // it's all to extract the increment value from the request body
-                updateOps.$inc = { completeCount: (value as {increment: number}).increment }; // use $inc operator for increments
-            } else {
-                // directly set other fields
-                if (!updateOps.$set) updateOps.$set = {};
-                updateOps.$set[key] = value;
-            }
-        }
-
-        // try to apply updates
-        // use new: true to return document AFTER update is applied
-        const updatedHabit = await HabitModel.findByIdAndUpdate(id, updateOps, { returnDocument: "after" });
-        if (!updatedHabit) {
-            return NextResponse.json(
-                { error: "Habit not found" },
-                { status: 404 }
-            );
-        }
+        // call service function to apply updates
+        const updatedHabit = await editHabit(id, updates);
 
         return NextResponse.json({
             message: "Habit updated successfully",
@@ -76,9 +21,16 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
         }, { status: 200 });
 
     } catch (error: any) {
+        let status = 500;
+        if (error.message === "Habit not found") {
+            status = 404;
+        } else if (error.message === "Invalid habit id") {
+            status = 400;
+        }
+
         return NextResponse.json(
             { error: error.message },
-            { status: 500 }
+            { status: status }
         );
     }
 }
