@@ -20,7 +20,7 @@ export default function SignupPage() {
     const onSignup = async () => {
         try {
             setLoading(true); // hide behind loading screen
-            const response = await axios.post("/api/users/signup", user); // make post request to api using stateful object var
+            await axios.post("/api/users/signup", user); // make post request to api using stateful object var
 
             router.push("/login"); // redirect user to login page
             toast.success("Signup successful!");

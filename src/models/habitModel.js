@@ -25,7 +25,8 @@ const habitSchema = new mongoose.Schema({
     completeCount: Number, // number of times user has completed goal this cycle
     user: {
         type: mongoose.Schema.ObjectId,
-        ref: "UserModel" // reference table that User schema is attached to
+        ref: "UserModel", // reference table that User schema is attached to
+        required: true
     }
 });
 

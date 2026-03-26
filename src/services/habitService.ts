@@ -6,7 +6,7 @@ import mongoose, { ObjectId } from "mongoose";
 
 connect();
 
-export async function getHabitById(habitId: string) {
+export async function getHabitById(habitId: string): Promise<Habit> {
     if (!mongoose.Types.ObjectId.isValid(habitId)) {
         throw new Error("Invalid habit id");
     }
@@ -15,10 +15,15 @@ export async function getHabitById(habitId: string) {
     if (!habit) {
         throw new Error("Habit not found");
     }
-    return habit;
+
+    return {
+        ...habit.toObject(),
+        id: habit._id.toString(),
+        userId: habit.user.toString()
+    } as Habit;
 }
 
-export async function createHabit(newHabit: Habit) {
+export async function createHabit(newHabit: Habit): Promise<Habit> {
     const user = await UserModel.findById(newHabit.userId);
 
     if (!newHabit.userId || !user) {
@@ -46,12 +51,16 @@ export async function createHabit(newHabit: Habit) {
     await user.save(); // wait for user info to update
     // TODO: transaction
 
-    return newHabitModel;
+    return {
+        ...newHabitModel.toObject(),
+        id: newHabitModel._id.toString(),
+        userId: newHabitModel.user.toString()
+    } as Habit;
 }
 
 // for Habit objects, id and userId cannot be updated; if habitId is passed in, it's validated; if userId is passed in, it's ignored
 // Cannot specify both completeCount update and increment in the same request
-export async function editHabit(updates: Partial<Habit>) {
+export async function editHabit(updates: Partial<Habit>): Promise<Habit> {
     // validate object id; if not valid, don't bother querying
     const habitId = updates.id as string;
     if (!mongoose.Types.ObjectId.isValid(habitId)) {
@@ -96,5 +105,9 @@ export async function editHabit(updates: Partial<Habit>) {
         throw new Error("Habit not found");
     }
 
-    return updatedHabit;
+    return {
+        ...updatedHabit.toObject(),
+        id: updatedHabit._id.toString(),
+        userId: updatedHabit.user.toString()
+    } as Habit;
 }

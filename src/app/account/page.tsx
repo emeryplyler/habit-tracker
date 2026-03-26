@@ -4,6 +4,7 @@ import Link from "next/link";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { User } from "@/types/Users";
 
 export default function AccountPage() {
     const router = useRouter();
@@ -11,11 +12,12 @@ export default function AccountPage() {
     const [loading, setLoading] = useState(true);
 
     // get account information
-    const [user, setUser] = useState();
+    const [user, setUser] = useState<User | null>(null);
     const getUserDetails = async () => {
         try {
             const res = await axios.get("/api/users/me"); // retrieve user's information from api, which calls DB
-            setUser(res.data.user._id);
+            const currentUser: User = res.data.user;
+            setUser(currentUser);
         } catch (error: any) {
             if (error.response && error.response.status === 400) {
                 toast.error("User not found - redirecting to login page");
@@ -54,7 +56,7 @@ export default function AccountPage() {
             <div>
                 {loading ? "Loading..." : (<>
                     <hr />
-                    <h2>{user ? <Link href={`/account/${user}`}>Profile</Link> : "No user found"}</h2>
+                    <h2>{user ? <Link href={`/account/${user.id}`}>Profile</Link> : "No user found"}</h2>
                     <hr />
                     <button onClick={logout}>Log Out</button>
                 </>)}

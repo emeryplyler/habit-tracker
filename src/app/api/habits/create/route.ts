@@ -22,7 +22,6 @@ export async function POST(request: NextRequest) {
         }
 
         const savedHabit = await HabitService.createHabit(newHabit);
-        console.log("new habit created");
 
         return NextResponse.json(
             { message: "Habit created succesfully", data: savedHabit },
