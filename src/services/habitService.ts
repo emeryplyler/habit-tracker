@@ -2,9 +2,21 @@ import { connect } from "@/dbConfig/dbConfig";
 import { HabitModel } from "@/models/habitModel";
 import UserModel from "@/models/userModel";
 import { Habit } from "@/types/Habits";
-import mongoose from "mongoose";
+import mongoose, { ObjectId } from "mongoose";
 
 connect();
+
+export async function getHabitById(habitId: string) {
+    if (!mongoose.Types.ObjectId.isValid(habitId)) {
+        throw new Error("Invalid habit id");
+    }
+
+    const habit = await HabitModel.findById(habitId);
+    if (!habit) {
+        throw new Error("Habit not found");
+    }
+    return habit;
+}
 
 export async function createHabit(newHabit: Habit) {
     const user = await UserModel.findById(newHabit.userId);
@@ -26,7 +38,6 @@ export async function createHabit(newHabit: Habit) {
         user: newHabit.userId
     });
 
-    // const savedHabit = await newHabit.save();
     await newHabitModel.save();
 
     // also insert new habit into user's habits array
