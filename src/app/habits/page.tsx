@@ -94,6 +94,10 @@ export default function HabitsPage() {
         }
     };
 
+    const deleteHabit = async (habitId: string) => {
+        toast.success("delete habit");
+    }
+
     return (
         <div>
             <h1>Habits</h1>
@@ -115,7 +119,9 @@ export default function HabitsPage() {
                                 goalCount={habit.goalCount}
                                 completeCount={habit.completeCount}
                                 habitId={habit._id}
-                                incrementComplete={incrementCount}>
+                                incrementComplete={incrementCount}
+                                deleteHabit={deleteHabit}
+                                goalStatus={habit.goalStatus}>
                             </HabitsItem>
                         );
 

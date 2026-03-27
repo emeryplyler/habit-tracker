@@ -7,6 +7,7 @@ export interface HabitsItemProps {
     habitId: string,
     incrementComplete: (habitId: string) => void;
     goalStatus?: goalStatuses;
+    deleteHabit: (habitId: string) => void;
 }
 
 export interface Habit {
@@ -19,6 +20,7 @@ export interface Habit {
     goalCount: number,
     completeCount: number,
     incrementCompleteCount?: number,
+    goalStatus?: goalStatuses;
     userId: string,
 }
 

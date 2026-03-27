@@ -1,26 +1,32 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+## To Run
 
-First, run the development server:
+After cloning from Git, install the required packages:
+
+```bash
+npm install
+```
+
+Afterwards, you'll need to create a file called ".env" and populate it as follows:
+
+```bash
+MONGO_URI=mongodb+srv://<username>:<password>@cluster0.lybzmpo.mongodb.net/
+JWT_SECRET=<secret>
+DOMAIN=http://localhost:3000
+```
+
+Once the .env file is complete, you can run the project:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Notes
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
 
 To learn more about Next.js, take a look at the following resources:
 

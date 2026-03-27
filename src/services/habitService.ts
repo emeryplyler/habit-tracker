@@ -1,7 +1,7 @@
 import { connect } from "@/dbConfig/dbConfig";
 import { HabitModel } from "@/models/habitModel";
 import UserModel from "@/models/userModel";
-import { Habit } from "@/types/Habits";
+import { Habit, goalStatuses } from "@/types/Habits";
 import mongoose, { ObjectId } from "mongoose";
 
 connect();
@@ -16,10 +16,19 @@ export async function getHabitById(habitId: string): Promise<Habit> {
         throw new Error("Habit not found");
     }
 
+    // calculate goal status
+    let goalStatus = goalStatuses.INCOMPLETE;
+    if (habit.completeCount! === habit.goalCount!) {
+        goalStatus = goalStatuses.COMPLETE;
+    } else if (habit.completeCount! > habit.goalCount!) {
+        goalStatus = goalStatuses.SURPASSED;
+    }
+
     return {
         ...habit.toObject(),
         id: habit._id.toString(),
-        userId: habit.user.toString()
+        userId: habit.user.toString(),
+        goalStatus: goalStatus
     } as Habit;
 }
 
