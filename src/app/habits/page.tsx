@@ -71,6 +71,16 @@ export default function HabitsPage() {
 
         try {
             await incrementCountDB(habitId); // Wait for DB update
+            // if update is successful, retrieve updated habit info to get updated goal status
+            const response = await axios.get(`/api/habits/getone/${habitId}`);
+            setHabits(prevHabits =>
+                prevHabits.map(habit => {
+                    if (habit._id === habitId) {
+                        return response.data.data; // update habit with new info from DB
+                    }
+                    return habit;
+                })
+            );
             toast.success("Good work!");
         } catch (error) {
             // Revert local state on failure
@@ -107,7 +117,7 @@ export default function HabitsPage() {
         } catch (error: any) {
             toast.error(error.message);
         }
-    }
+    };
 
     return (
         <div>
