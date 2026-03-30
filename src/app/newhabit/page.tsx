@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-import UserModel from "@/models/userModel";
 
 export default function HabitsPage() {
     const router = useRouter(); // get router so we can redirect user
@@ -33,7 +32,8 @@ export default function HabitsPage() {
             router.push("/habits");
             console.debug(response);
         } catch (error: any) {
-            toast.error(error.message);
+            toast.error("Couldn't create habit, please try again later");
+
         } finally {
             setLoading(false);
         }
@@ -113,6 +113,7 @@ export default function HabitsPage() {
             >
                 Submit
             </button> */}
+            <Toaster />
         </div>
     );
 }

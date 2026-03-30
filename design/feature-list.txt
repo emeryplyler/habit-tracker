@@ -7,6 +7,6 @@
     - delete one
 - detect if user has met goal
 
+To do:
 - default/preset goals to pick?
-
 - limit user to 10 ish goals for performance

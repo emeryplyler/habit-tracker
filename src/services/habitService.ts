@@ -16,7 +16,32 @@ export async function getHabitById(habitId: string): Promise<Habit> {
         throw new Error("Habit not found");
     }
 
-    // calculate goal status
+
+    // check current cycle progress and update completeCount if necessary
+    const now = new Date();
+    const cycleStart = habit.currentCycleStart;
+    if (habit.frequency === "daily") {
+        if (now.getDate() > cycleStart.getDate() || now.getMonth() > cycleStart.getMonth() || now.getFullYear() > cycleStart.getFullYear()) {
+            // new day, reset completeCount and update cycleStart
+            habit.completeCount = 0;
+            habit.currentCycleStart = now;
+            habit.currentCycleStart.setHours(0, 0, 0, 0); // set to start of today
+            await habit.save();
+        }
+    } 
+    // else if (habit.frequency === "weekly") {
+    //     const dayOfWeek = now.getDay();
+    //     const daysSinceLastMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+    //     const mostRecentMonday = new Date(now.setDate(now.getDate() - daysSinceLastMonday)); // find the most recent monday
+    //     if (mostRecentMonday > cycleStart) { // if most recent monday is after cycle start, then set cycle start to most recent monday and reset completeCount
+    //         habit.completeCount = 0;
+    //         habit.currentCycleStart = mostRecentMonday;
+    //         habit.currentCycleStart.setHours(0, 0, 0, 0);
+    //         await habit.save();
+    //     }
+    // }
+
+    // calculate goal status after date update
     let goalStatus = goalStatuses.INCOMPLETE;
     if (habit.completeCount! === habit.goalCount!) {
         goalStatus = goalStatuses.COMPLETE;
@@ -40,6 +65,21 @@ export async function createHabit(newHabit: Habit): Promise<Habit> {
     }
 
     // TODO: validate newHabit fields
+    // mongoose model already validates most fields
+
+    // set currentCycleStart to last Monday for weekly, or today for daily
+    let now = new Date();
+    now.setHours(0, 0, 0, 0); // set to start of today for consistent cycle start times
+    let currentCycleStart = new Date();
+    currentCycleStart.setHours(0, 0, 0, 0); 
+    if (newHabit.frequency === "weekly") {
+        const dayOfWeek = now.getDay();
+        const daysSinceLastMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1; // if Sunday (0), go back 6 days; otherwise, go back dayOfWeek - 1 days
+        currentCycleStart.setDate(now.getDate() - daysSinceLastMonday);
+    } 
+    // else if (newHabit.frequency === "daily") {
+    //     currentCycleStart.setHours(0, 0, 0, 0); // set to start of today
+    // }
 
     const newHabitModel = new HabitModel({
         name: newHabit.name,
@@ -49,7 +89,8 @@ export async function createHabit(newHabit: Habit): Promise<Habit> {
         difficulty: newHabit.difficulty || 1,
         goalCount: newHabit.goalCount,
         completeCount: newHabit.completeCount || 0,
-        user: newHabit.userId
+        user: newHabit.userId,
+        currentCycleStart
     });
 
     await newHabitModel.save();
