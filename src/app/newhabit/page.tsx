@@ -16,7 +16,7 @@ export default function HabitsPage() {
         frequency: "",
         notes: "",
         difficulty: "",
-        goalCount: "",
+        goalCount: "1",
     });
 
     // stateful var to enable button only when valid info entered

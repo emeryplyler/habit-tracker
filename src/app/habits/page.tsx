@@ -95,7 +95,18 @@ export default function HabitsPage() {
     };
 
     const deleteHabit = async (habitId: string) => {
-        toast.success("delete habit");
+        try {
+            const response = await axios.delete(`/api/habits/deleteone/${habitId}`);
+            if (response.status === 200) {
+                // Remove habit from local state
+                setHabits(prevHabits => prevHabits.filter(habit => habit._id !== habitId));
+                toast.success("Habit deleted");
+            } else {
+                throw new Error("Failed to delete habit");
+            }
+        } catch (error: any) {
+            toast.error(error.message);
+        }
     }
 
     return (

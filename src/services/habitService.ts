@@ -2,7 +2,7 @@ import { connect } from "@/dbConfig/dbConfig";
 import { HabitModel } from "@/models/habitModel";
 import UserModel from "@/models/userModel";
 import { Habit, goalStatuses } from "@/types/Habits";
-import mongoose, { ObjectId } from "mongoose";
+import mongoose from "mongoose";
 
 connect();
 
@@ -119,4 +119,27 @@ export async function editHabit(updates: Partial<Habit>): Promise<Habit> {
         id: updatedHabit._id.toString(),
         userId: updatedHabit.user.toString()
     } as Habit;
+}
+
+export async function deleteHabit(delHabit: Habit, userId: string): Promise<void> {
+    // check if user's current id matches habit's user id to verify ownership; if not, throw error
+    if (delHabit.userId !== userId) {
+        throw new Error("Not authorized to delete this habit");
+    }
+    const habitId = delHabit.id!.toString();
+    if (!mongoose.Types.ObjectId.isValid(habitId)) {
+        throw new Error("Invalid habit id");
+    }
+    const habit = await HabitModel.findByIdAndDelete(habitId);
+    if (!habit) {
+        throw new Error("Habit not found");
+    }
+
+    // also remove habit from user's habits array
+    const user = await UserModel.findById(habit.user);
+    if (user) {
+        // NOTE: if user is not found, this code won't run but the habit will still be deleted
+        user.habits = user.habits.filter(hId => hId.toString() !== habitId);
+        await user.save();
+    }
 }
