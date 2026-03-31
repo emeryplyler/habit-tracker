@@ -16,7 +16,6 @@ export async function getHabitById(habitId: string): Promise<Habit> {
         throw new Error("Habit not found");
     }
 
-
     // check current cycle progress and update completeCount if necessary
     const now = new Date();
     const cycleStart = habit.currentCycleStart;
@@ -28,18 +27,19 @@ export async function getHabitById(habitId: string): Promise<Habit> {
             habit.currentCycleStart.setHours(0, 0, 0, 0); // set to start of today
             await habit.save();
         }
-    } 
-    // else if (habit.frequency === "weekly") {
-    //     const dayOfWeek = now.getDay();
-    //     const daysSinceLastMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
-    //     const mostRecentMonday = new Date(now.setDate(now.getDate() - daysSinceLastMonday)); // find the most recent monday
-    //     if (mostRecentMonday > cycleStart) { // if most recent monday is after cycle start, then set cycle start to most recent monday and reset completeCount
-    //         habit.completeCount = 0;
-    //         habit.currentCycleStart = mostRecentMonday;
-    //         habit.currentCycleStart.setHours(0, 0, 0, 0);
-    //         await habit.save();
-    //     }
-    // }
+    }
+    else if (habit.frequency === "weekly") {
+        const dayOfWeek = now.getDay();
+        const daysSinceLastMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+        const mostRecentMonday = new Date(now.setDate(now.getDate() - daysSinceLastMonday)); // find the most recent monday
+        mostRecentMonday.setHours(0, 0, 0, 0); // set to start of that monday
+        if (mostRecentMonday > cycleStart) { // if most recent monday is after cycle start, then set cycle start to most recent monday and reset completeCount
+            habit.completeCount = 0;
+            habit.currentCycleStart = mostRecentMonday;
+            habit.currentCycleStart.setHours(0, 0, 0, 0);
+            await habit.save();
+        }
+    }
 
     // calculate goal status after date update
     let goalStatus = goalStatuses.INCOMPLETE;
@@ -68,18 +68,15 @@ export async function createHabit(newHabit: Habit): Promise<Habit> {
     // mongoose model already validates most fields
 
     // set currentCycleStart to last Monday for weekly, or today for daily
-    let now = new Date();
+    let now = new Date(); // current date, to calculate days since last cycle start for weekly
     now.setHours(0, 0, 0, 0); // set to start of today for consistent cycle start times
     let currentCycleStart = new Date();
-    currentCycleStart.setHours(0, 0, 0, 0); 
+    currentCycleStart.setHours(0, 0, 0, 0);
     if (newHabit.frequency === "weekly") {
         const dayOfWeek = now.getDay();
         const daysSinceLastMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1; // if Sunday (0), go back 6 days; otherwise, go back dayOfWeek - 1 days
         currentCycleStart.setDate(now.getDate() - daysSinceLastMonday);
-    } 
-    // else if (newHabit.frequency === "daily") {
-    //     currentCycleStart.setHours(0, 0, 0, 0); // set to start of today
-    // }
+    }
 
     const newHabitModel = new HabitModel({
         name: newHabit.name,
