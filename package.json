@@ -6,19 +6,23 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "jest"
   },
   "dependencies": {
+    "@types/jest": "^30.0.0",
     "axios": "^1.13.5",
     "bcryptjs": "^3.0.3",
+    "jest": "^30.3.0",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.2.2",
-    "next": "16.1.6",
+    "next": "^16.2.1",
     "nodemailer": "^8.0.1",
     "nodemon": "^3.1.14",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "react-hot-toast": "^2.6.0"
+    "react-hot-toast": "^2.6.0",
+    "ts-jest": "^29.4.6"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
