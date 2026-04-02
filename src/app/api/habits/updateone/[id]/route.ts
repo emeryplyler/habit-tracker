@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { editHabit } from "@/services/habitService";
 import { Habit } from "@/types/Habits";
 
-export async function PATCH(request: NextRequest, { params }: { params: { id: string; }; }) {
+export async function PATCH(request: NextRequest, { params }: { params: Promise<{ id: string; }>; }) {
     try {
         // retrieve habit id from path params
         const { id } = await params; // note: params requires await

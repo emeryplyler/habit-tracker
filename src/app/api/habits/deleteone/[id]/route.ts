@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import * as habitService from "@/services/habitService";
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: string; }; }) {
+export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string; }>; }) {
     // id of habit is in params
     // the type of params is an object with a field called 'id' which is a string
     const { id } = await params;
