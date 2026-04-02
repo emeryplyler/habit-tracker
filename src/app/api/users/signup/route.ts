@@ -43,7 +43,13 @@ export async function POST(request: NextRequest) {
         );
 
     } catch (error: any) {
-        return NextResponse.json({ error: error.errors },
-            { status: 500 });
+        let errorMessage = error.message;
+        let status = 500;
+        if (error.code === 11000 && error.keyPattern.username) {
+            errorMessage = "There's already a user registered with that username";
+            status = 400;
+        }
+        return NextResponse.json({ error: errorMessage },
+            { status });
     }
 }
