@@ -77,7 +77,7 @@ export default function SignupPage() {
                 {loading && <p>Loading...</p>}
 
             </form>
-            <Link href={"/login"}>Log in instead</Link>
+            <Link className="instead-link" href={"/login"}>Log in instead</Link>
             <Toaster />
         </div>
     );

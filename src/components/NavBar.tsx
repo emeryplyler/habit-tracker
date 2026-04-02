@@ -72,7 +72,7 @@ const NavBar = () => {
 
     return (
         <div className={styles.navbar}>
-            <div>
+            <div className="current-user">
                 {currentUser && `Currently logged in as ${currentUser.username}`}
             </div>
             <ul>

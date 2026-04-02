@@ -48,6 +48,7 @@ export async function POST(request: NextRequest) {
         return response; // response is finished; notify client by sending the response
 
     } catch (error: any) {
+        console.log(error)
         return NextResponse.json({ error: error.message }, { status: 500 }); // server-side error
     }
 }

@@ -49,7 +49,6 @@ export async function POST(request: NextRequest) {
             errorMessage = "There's already a user registered with that username";
             status = 400;
         }
-        return NextResponse.json({ error: errorMessage },
-            { status });
+        return NextResponse.json({ error: errorMessage }, { status });
     }
 }

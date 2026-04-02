@@ -15,7 +15,7 @@ export default function LoginPage() {
 
     const [buttonDisabled, setButtonDisabled] = useState(false);
     const [loading, setLoading] = useState(false); // technically not loading until page logic starts
-    
+
     // log in function called when login button pressed
     const onLogin = async () => {
         try {
@@ -25,7 +25,7 @@ export default function LoginPage() {
             router.push("/"); // redirect user to homepage, now logged in
             toast.success("Login successful");
         } catch (error: any) {
-            toast.error(error.response.data.error)
+            toast.error(error.response.data.error);
         } finally {
             setLoading(false);
         }
@@ -37,41 +37,42 @@ export default function LoginPage() {
         } else {
             setButtonDisabled(true); // data invalid; disable submit button
         }
-    })
+    });
 
     return (
         <div>
             <h1>Log In</h1>
             <hr />
-            <label htmlFor="username">Username</label>
-            <input
-                id="username"
-                type="text"
-                value={user.username}
-                // when the value of input is changed, call setUser; keep prev user values ..., change username (spread operator)
-                onChange={(e) => setUser({ ...user, username: e.target.value })}
-                placeholder="Username"
-            />
+            <form action={onLogin}>
+                <label htmlFor="username">Username</label>
+                <input
+                    id="username"
+                    type="text"
+                    value={user.username}
+                    // when the value of input is changed, call setUser; keep prev user values ..., change username (spread operator)
+                    onChange={(e) => setUser({ ...user, username: e.target.value })}
+                    placeholder="Username"
+                    required
+                />
 
-            <label htmlFor="password">Password</label>
-            <input
-                id="password"
-                type="password"
-                value={user.password}
-                onChange={(e) => setUser({ ...user, password: e.target.value })}
-                placeholder="Password"
-            />
+                <label htmlFor="password">Password</label>
+                <input
+                    id="password"
+                    type="password"
+                    value={user.password}
+                    onChange={(e) => setUser({ ...user, password: e.target.value })}
+                    placeholder="Password"
+                    required
+                />
 
-            {!loading && (
-                <button
-                    // when button clicked, call onSignup function
-                    onClick={onLogin}
-                >
-                    Log In
-                </button>                
-            )}
+                {!loading && (
+                    <button>
+                        Log In
+                    </button>
+                )}
 
-            {loading && <p>Loading...</p>}
+                {loading && <p>Loading...</p>}
+            </form>
 
             <Link href={"/signup"}>Create an account</Link>
             <Toaster />
