@@ -16,7 +16,7 @@ const NavBar = () => {
     const getUserDetails = async () => {
         try {
             const res = await axios.get("/api/users/me"); // retrieve user's information from api, which calls DB
-            setCurrentUser({ username: res.data.user.username });
+            setCurrentUser({ nickname: res.data.user.nickname });
         } catch (error: any) {
             setCurrentUser(undefined);
         }
@@ -52,10 +52,6 @@ const NavBar = () => {
         {
             name: "Account",
             link: "/account"
-        },
-        {
-            name: "Habits",
-            link: "/habits"
         }
     ];
 
@@ -72,8 +68,10 @@ const NavBar = () => {
 
     return (
         <div className={styles.navbar}>
+            <img className="home-button"></img>
+            <h1 className="habit-tracker-title">Habit Tracker</h1>
             <div className="current-user">
-                {currentUser && `Currently logged in as ${currentUser.username}`}
+                {currentUser && `Welcome, ${currentUser.nickname}`}
             </div>
             <ul>
                 {!currentUser && menuItems.map(item => {

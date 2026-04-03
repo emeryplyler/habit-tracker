@@ -29,7 +29,7 @@ export default function HabitsPage() {
             const response = await axios.post("/api/habits/create", habit);
             // redirect user to /habits
             toast.success("Habit created!");
-            router.push("/habits");
+            router.push("/");
             console.debug(response);
         } catch (error: any) {
             toast.error("Couldn't create habit, please try again later");

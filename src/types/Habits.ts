@@ -1,15 +1,3 @@
-export interface HabitsItemProps {
-    name: string,
-    description: string,
-    frequency: string,
-    goalCount: number,
-    completeCount: number,
-    habitId: string,
-    incrementComplete: (habitId: string) => void;
-    goalStatus?: goalStatuses;
-    deleteHabit: (habitId: string) => void;
-}
-
 export interface Habit {
     id?: string,
     name: string,
@@ -22,6 +10,12 @@ export interface Habit {
     incrementCompleteCount?: number,
     goalStatus?: goalStatuses;
     userId: string,
+}
+
+export interface HabitsItemProps {
+    habit: Habit
+    incrementComplete: (habitId: string) => void;
+    deleteHabit: (habitId: string) => void;
 }
 
 export enum goalStatuses {
