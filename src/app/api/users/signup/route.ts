@@ -2,7 +2,6 @@ import { connect } from "@/dbConfig/dbConfig";
 import UserModel from "@/models/userModel";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import { sendEmail } from "@/services/mailer";
 
 connect();
 
@@ -11,16 +10,16 @@ connect();
 export async function POST(request: NextRequest) {
     try {
         const reqBody = await request.json();
-        const { username, password, email } = reqBody;
+        const { username, password, nickname } = reqBody;
 
-        // does user already exist?
-        const user = await UserModel.findOne({ email });
-        if (user) {
-            return NextResponse.json(
-                { error: "A user is already registered with that email" },
-                { status: 400 }
-            );
-        }
+        // // does user already exist?
+        // const user = await UserModel.findOne({ username });
+        // if (user) {
+        //     return NextResponse.json(
+        //         { error: "A user is already registered with that username" },
+        //         { status: 400 }
+        //     );
+        // }
 
         // hash password to store in db
         const salt = await bcrypt.genSalt();
@@ -29,13 +28,10 @@ export async function POST(request: NextRequest) {
         const newUser = new UserModel({
             username,
             password: hashedPassword,
-            email
+            nickname
         });
 
         await newUser.save();
-
-        // send verification email
-        // await sendEmail({ email, emailType: "VERIFY", userId: savedUser._id });
 
         return NextResponse.json(
             { message: "User created successfully" },

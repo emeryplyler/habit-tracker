@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { habitSchema } from "@/models/habitModel";
 
 const userSchema = new mongoose.Schema({
     username: {
@@ -11,10 +10,9 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, "Please enter a password"]
     },
-    email: {
+    nickname: {
         type: String,
-        required: [true, "Please enter an email"],
-        unique: true
+        required: [true, "Please enter a name"]
     },
     isVerified: {
         type: Boolean,

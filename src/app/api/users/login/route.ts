@@ -9,7 +9,7 @@ connect();
 export async function POST(request: NextRequest) {
     try {
         const reqBody = await request.json();
-        const { username, password } = reqBody; // get email and password from request body
+        const { username, password } = reqBody; // get username and password from request body
 
         // does user exist?
         const user = await UserModel.findOne({ username });
@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
         const tokenData = {
             id: user._id,
             username: user.username,
-            email: user.email
+            nickname: user.nickname
         };
 
         const token = jwt.sign(tokenData, process.env.JWT_SECRET!, { expiresIn: "1d" }); // sign token

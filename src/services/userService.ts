@@ -12,7 +12,7 @@ export async function getUserById(userId: string): Promise<User> {
 
     return {
         username: user.username,
-        email: user.email,
+        nickname: user.nickname,
         habits: user.habits.map(habit => habit.toString()), // convert ObjectIds to strings
         id: user._id.toString()
     } as User;

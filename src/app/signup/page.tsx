@@ -11,7 +11,7 @@ export default function SignupPage() {
     const [user, setUser] = React.useState({
         username: "",
         password: "",
-        email: ""
+        nickname: ""
     });
 
     const [loading, setLoading] = React.useState(false);
@@ -57,13 +57,14 @@ export default function SignupPage() {
                     required
                 />
 
-                <label htmlFor="email">Email</label>
+                <label htmlFor="nickname">Name or Nickname</label>
                 <input
-                    id="email"
+                    title="What you'd like to be called"
+                    id="nickname"
                     type="text"
-                    value={user.email}
-                    onChange={(e) => setUser({ ...user, email: e.target.value })}
-                    placeholder="Email"
+                    value={user.nickname}
+                    onChange={(e) => setUser({ ...user, nickname: e.target.value })}
+                    placeholder="Name"
                     required
                 />
 
