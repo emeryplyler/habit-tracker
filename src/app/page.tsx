@@ -17,10 +17,6 @@ export default function Home() {
     try {
       // try to get current user
       const response = await axios.get("/api/users/me"); // retrieve user's information from api which calls DB
-      if (response.status === 400) {
-        toast.error("User not found - please re-log in");
-        return;
-      }
       setUser(response.data.user);
       // retrieve information about each habit
       // Use Promise.all to wait for all async operations
@@ -36,6 +32,10 @@ export default function Home() {
       setHabits(validHabits);
       setLoading(false); // finish loading
     } catch (error: any) {
+      if (error.status === 400) {
+        // toast.error("User not found - please log in");
+        return;
+      }
       toast.error(error.message);
     } finally {
       setLoading(false);
@@ -113,9 +113,9 @@ export default function Home() {
       <main className="homepage-main">
         <h1 className="homepage-title">Welcome to Habit Tracker!</h1>
         <p className="homepage-description">Keep track of your daily and weekly habits to build up routines.</p>
-        <Link href="/newhabit">New habit</Link>
-        {loading && "Loading..."}
-        {!loading && (
+        {user && (<Link href="/newhabit">New habit</Link>)}
+        {user && loading && (<p>Loading...</p>)}
+        {!loading && user && (
           <ul>
             {habits.length < 1 && (<div>No habits found</div>)}
 
