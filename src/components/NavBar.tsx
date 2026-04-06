@@ -31,10 +31,6 @@ const NavBar = () => {
 
     const menuItems = [
         {
-            name: "Home",
-            link: "/"
-        },
-        {
             name: "Sign Up",
             link: "/signup"
         },
@@ -44,23 +40,12 @@ const NavBar = () => {
         }
     ];
 
-    const menuItemsLoggedIn = [
-        {
-            name: "Home",
-            link: "/"
-        },
-        {
-            name: "Account",
-            link: "/account"
-        }
-    ];
-
     const logout = async () => {
         try {
             await axios.get("/api/users/logout"); // send get request to this path
             toast.success("Logout successful");
             setCurrentUser(undefined);
-            router.push("/"); // redirect to homepage
+            router.push("/login"); // redirect
         } catch (error: any) {
             toast.error(error.message);
         }
@@ -68,39 +53,43 @@ const NavBar = () => {
 
     return (
         <div className={styles.navbar}>
-            <Link className={styles.homeButton} href="/">
-                <picture>
-                    <source srcSet="home.svg" media="(prefers-color-scheme: light)" />
-                    <source srcSet="home_light.svg" media="(prefers-color-scheme: dark)" />
-                    <img src="home_light.svg" />
-                </picture>
-            </Link>
-            <h1 className={styles.trackerTitle}>Habit Tracker</h1>
-            <div className="current-user">
-                {currentUser && `Welcome, ${currentUser.nickname}`}
+            <div className={styles.homeItems}>
+                <Link className={styles.homeButton} href="/">
+                    <picture>
+                        <source srcSet="home.svg" media="(prefers-color-scheme: light)" />
+                        <source srcSet="home_light.svg" media="(prefers-color-scheme: dark)" />
+                        <img src="home_light.svg" />
+                    </picture>
+                </Link>
+                <h1 className={styles.trackerTitle}>Habit Tracker</h1>
             </div>
-            <ul>
-                {!currentUser && menuItems.map(item => {
-                    return ( // loop through menuItems and display each
-                        <li key={item.link}>
-                            <Link href={item.link}>
-                                {item.name}
-                            </Link>
-                        </li>
-                    );
-                })}
-                {currentUser && menuItemsLoggedIn.map(item => {
-                    return ( // loop through logged in menu items instead
-                        <li key={item.link}>
-                            <Link href={item.link}>
-                                {item.name}
-                            </Link>
-                        </li>
-                    );
-                })}
-                {/* handle logout link using a button since there's no logout page */}
-                {currentUser && (<button onClick={logout}>Log Out</button>)}
-            </ul>
+
+            <div className={styles.accountItems}>
+                <div className="current-user">
+                    {currentUser && `Welcome, ${currentUser.nickname}`}
+                </div>
+                <ul>
+                    {!currentUser && menuItems.map(item => {
+                        return ( // loop through menuItems and display each
+                            <li key={item.link}>
+                                <Link href={item.link}>
+                                    {item.name}
+                                </Link>
+                            </li>
+                        );
+                    })}
+                    {currentUser && (
+                        <div className={styles.accountDropdown}>
+                            <button className={styles.accountButton}>Account Settings</button>
+                            <div className={styles.dropdownContent}>
+                                <Link href="/account">Preferences</Link>
+                                <button onClick={logout}>Log Out</button>
+                            </div>
+                        </div>
+                    )}
+                </ul>
+            </div>
+
 
         </div>
     );

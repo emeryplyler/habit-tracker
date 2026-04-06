@@ -1,12 +1,24 @@
+/* Basic styles */
+
 .navbar {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 1em 0em;
+    /* padding: 1em 0em; */
     /* background-color: var(--background-2); */
     border-radius: 10px;
-    width: fit-content;
+    /* width: fit-content; */
+}
+
+.accountItems,
+.homeItems {
+    display: flex;
+    align-items: center;
+}
+
+.accountItems {
+    flex-direction: column;
 }
 
 .current-user {
@@ -22,8 +34,41 @@
 
 .trackerTitle {
     margin: 0;
+    padding: 0 1em;
 }
 
 .homeButton {
     width: 3em;
+}
+
+/* Dropdown styles */
+
+.accountDropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.accountButton {
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+.dropdownContent {
+    display: none;
+    position: absolute;
+    min-width: 160px;
+    z-index: 1;
+}
+
+.dropdownContent *:hover {
+    background-color: lightblue;
+}
+
+.accountDropdown:hover .dropdownContent {
+    display: block;
+    background-color: rgba(150, 151, 230, 0.5);
+}
+
+.accountDropdown:hover{
+    background-color: rgba(255, 255, 255, 0.349);
 }
