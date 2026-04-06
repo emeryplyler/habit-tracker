@@ -3,8 +3,8 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 1em 2em;
-    background-color: var(--background-2);
+    padding: 1em 0em;
+    /* background-color: var(--background-2); */
     border-radius: 10px;
     width: fit-content;
 }
@@ -18,4 +18,12 @@
     list-style-type: none;
     display: flex;
     gap: 1em;
+}
+
+.trackerTitle {
+    margin: 0;
+}
+
+.homeButton {
+    width: 3em;
 }

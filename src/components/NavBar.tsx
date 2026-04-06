@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
 import toast from "react-hot-toast";
@@ -68,8 +68,14 @@ const NavBar = () => {
 
     return (
         <div className={styles.navbar}>
-            <img className="home-button"></img>
-            <h1 className="habit-tracker-title">Habit Tracker</h1>
+            <Link className={styles.homeButton} href="/">
+                <picture>
+                    <source srcSet="home.svg" media="(prefers-color-scheme: light)" />
+                    <source srcSet="home_light.svg" media="(prefers-color-scheme: dark)" />
+                    <img src="home_light.svg" />
+                </picture>
+            </Link>
+            <h1 className={styles.trackerTitle}>Habit Tracker</h1>
             <div className="current-user">
                 {currentUser && `Welcome, ${currentUser.nickname}`}
             </div>
