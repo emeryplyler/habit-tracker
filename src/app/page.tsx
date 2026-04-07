@@ -123,7 +123,7 @@ export default function Home() {
           <Link className="new-habit-link" href="/newhabit">New habit</Link>
         </div>)}
 
-        {loading && user && (<p>Loading...</p>)}
+        {loading && (<p>Loading...</p>)}
 
         {!loading && user && (
           <ul>

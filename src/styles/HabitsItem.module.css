@@ -20,6 +20,20 @@
     cursor: pointer;
 }
 
+.description {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.1s, visibility 0.1s;
+    position: absolute;
+    background-color: var(--background-2);
+    color: var(--foreground);
+    padding: 1em;
+}
+
+.habit:hover .description {
+    visibility: visible;
+    opacity: 1;
+}
 /* .incomplete {
     border-color: #FFD700;
 }
