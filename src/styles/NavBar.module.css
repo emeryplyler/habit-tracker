@@ -44,6 +44,34 @@
     width: 3em;
 }
 
+.questionButton {
+    width: 2em;
+    position: relative;
+}
+
+.questionButton:hover .tooltip {
+    opacity: 1;
+    transition: opacity 0.1s;
+    visibility: visible;
+}
+
+.tooltip {
+    visibility: hidden;
+    position: absolute;
+    left: 120%;
+    top: -100%;
+    background-color: var(--background-2);
+    color: var(--foreground);
+    opacity: 0;
+    transition: opacity 0.1s;
+    padding: 0.5em;
+    border-radius: 5px;
+    width: max-content;
+    max-width: 200px;
+    z-index: 1;
+}
+
+
 /* Dropdown styles */
 
 .accountDropdown {

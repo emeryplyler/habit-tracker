@@ -62,6 +62,14 @@ const NavBar = () => {
                     </picture>
                 </Link>
                 <h1 className={styles.trackerTitle}>Habit Tracker</h1>
+                <picture className={styles.questionButton}>
+                    <source srcSet="question.svg" media="(prefers-color-scheme: light)" />
+                    <source srcSet="question_light.svg" media="(prefers-color-scheme: dark)" />
+                    <img src="question_light.svg" />
+                    <div className={styles.tooltip}>
+                        <p>Currently, all daily habits reset at midnight and all weekly habits reset midnight on Monday.</p>
+                    </div>
+                </picture>
             </div>
 
             <div className={styles.accountItems}>
