@@ -19,11 +19,9 @@
 
 .accountItems {
     flex-direction: column;
-}
-
-.current-user {
-    font-size: 0.9em;
-    color: var(--foreground);
+    justify-content:center;
+    align-items: center;
+    margin-top: 1em;
 }
 
 .navbar ul {
@@ -32,9 +30,14 @@
     gap: 1em;
 }
 
+.currentUser {
+    font-size: 1.3em;
+    color: var(--foreground);
+}
+
 .trackerTitle {
     margin: 0;
-    padding: 0 1em;
+    padding: 0 0.7em;
 }
 
 .homeButton {
@@ -44,13 +47,9 @@
 /* Dropdown styles */
 
 .accountDropdown {
-    position: relative;
+    /* position: relative; */
     display: inline-block;
-}
-
-.accountButton {
-    background-color: transparent;
-    text-decoration: underline;
+    text-align: center;
 }
 
 .dropdownContent {
@@ -58,17 +57,31 @@
     position: absolute;
     min-width: 160px;
     z-index: 1;
+    transition: height 0.5s ease-in-out;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dropdownButton {
+    padding: 1em 0;
 }
 
 .dropdownContent *:hover {
-    background-color: lightblue;
+    background-color: rgb(49, 138, 168);
+}
+
+.dropdownContent * {
+    background-color: transparent;
+    cursor: pointer;
+    border-radius: 0;
+    width: 100%;
+    padding: 1em;
+    margin: 0;
 }
 
 .accountDropdown:hover .dropdownContent {
-    display: block;
-    background-color: rgba(150, 151, 230, 0.5);
-}
-
-.accountDropdown:hover{
-    background-color: rgba(255, 255, 255, 0.349);
+    display: flex;
+    background-color: rgb(79, 91, 117);
+    border-width: 2px;
+    border-color: --foreground;
 }

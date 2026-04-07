@@ -47,7 +47,7 @@ const NavBar = () => {
             setCurrentUser(undefined);
             router.push("/login"); // redirect
         } catch (error: any) {
-            toast.error(error.message);
+            toast.error("Couldn't log out - please try again later");
         }
     };
 
@@ -65,7 +65,7 @@ const NavBar = () => {
             </div>
 
             <div className={styles.accountItems}>
-                <div className="current-user">
+                <div className={styles.currentUser}>
                     {currentUser && `Welcome, ${currentUser.nickname}`}
                 </div>
                 <ul>
@@ -78,16 +78,17 @@ const NavBar = () => {
                             </li>
                         );
                     })}
-                    {currentUser && (
-                        <div className={styles.accountDropdown}>
-                            <button className={styles.accountButton}>Account Settings</button>
-                            <div className={styles.dropdownContent}>
-                                <Link href="/account">Preferences</Link>
-                                <button onClick={logout}>Log Out</button>
-                            </div>
-                        </div>
-                    )}
+
                 </ul>
+                {currentUser && (
+                    <div className={styles.accountDropdown}>
+                        <div className={styles.dropdownButton}>Account Settings ▼</div>
+                        <div className={styles.dropdownContent}>
+                            <Link href="/account">Preferences</Link>
+                            <button onClick={logout}>Log Out</button>
+                        </div>
+                    </div>
+                )}
             </div>
 
 

@@ -111,10 +111,20 @@ export default function Home() {
   return (
     <div className="homepage">
       <main className="homepage-main">
-        <h1 className="homepage-title">Welcome to Habit Tracker!</h1>
-        <p className="homepage-description">Keep track of your daily and weekly habits to build up routines.</p>
-        {user && (<Link href="/newhabit">New habit</Link>)}
-        {user && loading && (<p>Loading...</p>)}
+        {!user && (
+          <div>
+            <h1 className="homepage-title">Welcome to Habit Tracker!</h1>
+            <p className="homepage-description">Keep track of your daily and weekly habits to build up routines.</p>
+          </div>
+        )}
+
+        {user && (<div className="habits-bar">
+          <h1>My habits for this week</h1>
+          <Link className="new-habit-link" href="/newhabit">New habit</Link>
+        </div>)}
+
+        {loading && user && (<p>Loading...</p>)}
+
         {!loading && user && (
           <ul>
             {habits.length < 1 && (<div>No habits found</div>)}
@@ -133,6 +143,7 @@ export default function Home() {
             })}
           </ul>
         )}
+
       </main>
       <Toaster />
     </div>

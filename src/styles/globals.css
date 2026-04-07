@@ -44,7 +44,7 @@ form {
 button {
   padding: 0.5em 1em;
   background-color: var(--accent);
-  color: white;
+  /* color: white; */
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -68,4 +68,30 @@ input {
   text-align: center;
   margin: 1em auto;
   text-decoration: underline;
+}
+
+/* styling for homepage */
+
+.new-habit-link {
+  padding: 0.5em 1em;
+  background-color: #2b4681;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: fit-content;
+  margin: 0em 2em;
+}
+
+.new-habit-link:hover {
+  background-color: #4d6db1;
+}
+
+.habits-bar {
+  display: flex;
+  align-items: center;
+  margin-top: 0.5em;
+}
+
+.habits-bar h1 {
+  margin: 0.5em 0;
 }
