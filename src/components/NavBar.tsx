@@ -54,22 +54,16 @@ const NavBar = () => {
     return (
         <div className={styles.navbar}>
             <div className={styles.homeItems}>
-                <Link className={styles.homeButton} href="/">
-                    <picture>
-                        <source srcSet="home.svg" media="(prefers-color-scheme: light)" />
-                        <source srcSet="home_light.svg" media="(prefers-color-scheme: dark)" />
-                        <img src="home_light.svg" />
-                    </picture>
+                <Link href="/">
+                    <img className="home-button" src="home.svg" alt="Home" />
                 </Link>
                 <h1 className={styles.trackerTitle}>Habit Tracker</h1>
-                <picture className={styles.questionButton}>
-                    <source srcSet="question.svg" media="(prefers-color-scheme: light)" />
-                    <source srcSet="question_light.svg" media="(prefers-color-scheme: dark)" />
-                    <img src="question_light.svg" />
+                <div className={styles.questionButton}>
+                    <img className="question-button" src="question.svg" />
                     <div className={styles.tooltip}>
                         <p>Currently, all daily habits reset at midnight and all weekly habits reset midnight on Monday.</p>
                     </div>
-                </picture>
+                </div>
             </div>
 
             <div className={styles.accountItems}>

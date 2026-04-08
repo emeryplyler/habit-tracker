@@ -50,6 +50,19 @@ export default function AccountPage() {
         }
     };
 
+    // handle light/dark mode
+    const [isDarkMode, setIsDarkMode] = useState(false);
+    const toggleDarkMode = () => {
+        let body = document.body;
+        if (isDarkMode) {
+            body.classList.remove("dark-mode");
+            setIsDarkMode(false);
+        } else {
+            body.classList.add("dark-mode");
+            setIsDarkMode(true);
+        }
+    };
+
     return (
         <div>
             <h1>Account Settings</h1>
@@ -58,6 +71,8 @@ export default function AccountPage() {
                     <hr />
                     <h2>{user ? <Link href={`/account/${user.id}`}>Profile</Link> : "No user found"}</h2>
                     <hr />
+                    <button onClick={toggleDarkMode}>Change color scheme</button>
+                    <p>{isDarkMode ? "Dark Mode" : "Light Mode"}</p>
                     <button onClick={logout}>Log Out</button>
                 </>)}
             </div>
