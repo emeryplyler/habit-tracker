@@ -1,7 +1,7 @@
 "use client";
 
 import Link from 'next/link';
-import styles from "../styles/HabitsItem.module.css"
+import styles from "../styles/HabitsItem.module.css";
 import { HabitsItemProps } from '@/types/Habits';
 import CompletionBar from './CompletionBar';
 import DifficultyBar from './DifficultyBar';
@@ -17,14 +17,18 @@ const HabitsItem = ({ habit, incrementComplete, deleteHabit }: HabitsItemProps) 
 
     return (
         <li className={`${styles.habit} ${styles[habit.goalStatus!]}`}>
-            <h3>{habit.name}</h3>
-            <p>{habit.frequency}</p>
+            <div className={styles.progressItems}>
+                <h3>{habit.name}</h3>
+                <button className={styles.button} onClick={increment}>I just did this</button>
+                <CompletionBar percentComplete={(habit.completeCount / habit.goalCount) * 100} />
+            </div>
+            <div className={styles.statusItems}>
+                <p>{habit.frequency}</p>
+                <DifficultyBar difficulty={habit.difficulty} />
+                <Link className={styles.edit} href={`/habits/${habit.id}/edit`}>Edit</Link>
+            </div>
             <p className={styles.description}>{habit.description}</p>
-            <CompletionBar percentComplete={(habit.completeCount / habit.goalCount) * 100} />
-            <Link className={styles.edit} href={`/habits/${habit.id}/edit`}>Edit</Link>
-            <button className={styles.button} onClick={increment}>I just did this</button>
-            <button className={styles.button} onClick={del}>Delete this habit</button>
-            <DifficultyBar difficulty={habit.difficulty} />
+            {/* <button className={styles.button} onClick={del}>Delete this habit</button> */}
         </li>
     );
 };
