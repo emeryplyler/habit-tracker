@@ -1,17 +1,15 @@
 .completionBar {
-    width: 20%;
     height: 2em;
     background-color: #f0f0f0;
     border-radius: 10px;
     overflow: hidden;
-    /* position: relative; */
+    position: relative;
     display: flex;
-    /* align-items: center; */
+    align-items: center;
 }
 
 .completionFill {
     height: 100%;
-    transition: width 0.5s ease-in-out;
     text-align: center;
     display: flex;
     align-items: center;
@@ -29,6 +27,7 @@
 .hard {
     position: absolute;
     /* top: -20px; */
-    left: 30%;
+    /* left: 50%; */
+    right: 0;
     color: black;
 }

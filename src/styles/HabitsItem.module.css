@@ -3,9 +3,9 @@
 .habit {
     display: flex;
     justify-content: space-between;
-    padding: 10px;
+    padding: 10px 20px 30px 20px;
     /* border: 1px solid #ccc; */
-    background-color: #4e535a;
+    background-color: var(--background-3);
     margin: 2em 0;
 }
 
@@ -13,14 +13,39 @@
     width: 45%;
 }
 
+.progressItems {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    gap: 1em;
+}
+
+.nameAndButton {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+}
+
 .button, .edit {
     margin: 10px;
     padding: 5px 10px;
-    background-color: #3c6ba0;
-    color: white;
+    background-color: var(--habit-button);
+    color: var(--foreground);
     border: none;
     border-radius: 5px;
     cursor: pointer;
+}
+
+.button {
+    min-width: 109px;
+}
+
+.frequencyAndEdit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px;
 }
 
 .description {
@@ -37,12 +62,3 @@
     visibility: visible;
     opacity: 1;
 }
-/* .incomplete {
-    border-color: #FFD700;
-}
-.complete {
-    border-color: #4CAF50;
-}
-.surpassed {
-    border-color: #006eff;
-} */

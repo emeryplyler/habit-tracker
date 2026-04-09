@@ -24,6 +24,10 @@
     margin-top: 1em;
 }
 
+.homeItems {
+    width: 40%;
+}
+
 .navbar ul {
     list-style-type: none;
     display: flex;
@@ -37,11 +41,12 @@
 
 .trackerTitle {
     margin: 0;
-    padding: 0 0.7em;
+    padding: 0 5px;
 }
 
 .questionButton {
-    width: 2em;
+    min-width: 45px;
+    max-width: 45px;
     position: relative;
 }
 

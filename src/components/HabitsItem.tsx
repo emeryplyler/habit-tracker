@@ -18,14 +18,18 @@ const HabitsItem = ({ habit, incrementComplete, deleteHabit }: HabitsItemProps) 
     return (
         <li className={`${styles.habit} ${styles[habit.goalStatus!]}`}>
             <div className={styles.progressItems}>
-                <h3>{habit.name}</h3>
-                <button className={styles.button} onClick={increment}>I just did this</button>
+                <div className={styles.nameAndButton}>
+                    <h3>{habit.name}</h3>
+                    <button className={styles.button} onClick={increment}>I just did this</button>                    
+                </div>
                 <CompletionBar percentComplete={(habit.completeCount / habit.goalCount) * 100} />
             </div>
             <div className={styles.statusItems}>
-                <p>{habit.frequency}</p>
+                <div className={styles.frequencyAndEdit}>
+                    <p>{habit.frequency}</p>
+                    <Link className={styles.edit} href={`/habits/${habit.id}/edit`}>Edit</Link>                    
+                </div>
                 <DifficultyBar difficulty={habit.difficulty} />
-                <Link className={styles.edit} href={`/habits/${habit.id}/edit`}>Edit</Link>
             </div>
             <p className={styles.description}>{habit.description}</p>
             {/* <button className={styles.button} onClick={del}>Delete this habit</button> */}

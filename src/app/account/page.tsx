@@ -37,6 +37,7 @@ export default function AccountPage() {
 
     useEffect(() => {
         getUserDetails(); // retrieve user info on page load
+        setIsDarkMode(document.body.classList.contains("dark-mode")); // set dark mode after page load
     }, []);
 
     // logout button function

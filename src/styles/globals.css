@@ -7,12 +7,15 @@
   --background-3: #bbc7a4;
   --accent: #e75a7c;
   color-scheme: light dark;
+  --habit-button: #81a1c5;
 }
 
 .dark-mode {
   --background: #2c363f;
   --foreground: #ffffff;
   --background-2: #111827;
+  --background-3: #28395e;
+  --habit-button: #3c6ba0;
 }
 
 @theme inline {
@@ -21,15 +24,6 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
-/* 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #2c363f;
-    --foreground: #ffffff;
-    --background-2: #111827;
-    color-scheme: light dark;
-  }
-} */
 
 h1 {
   font-size: 1.75em;
@@ -40,7 +34,9 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
-  margin: 1em 10em;
+  margin: 1em 10%;
+  min-width: 375px;
+  max-width: 1000px;
 }
 
 form {
@@ -52,7 +48,6 @@ form {
 button {
   padding: 0.5em 1em;
   background-color: var(--accent);
-  /* color: white; */
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -81,17 +76,18 @@ input {
 /* styling for homepage */
 
 .new-habit-link {
-  padding: 0.5em 1em;
-  background-color: #2b4681;
+  padding: 10px;
+  background-color: var(--background-2);
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  text-align: center;
   width: fit-content;
   margin: 0em 2em;
 }
 
 .new-habit-link:hover {
-  background-color: #4d6db1;
+  background-color: var(--background-3);
 }
 
 .habits-bar {
@@ -106,7 +102,8 @@ input {
 
 /* icons styling */
 .home-button {
-  width: 3em;
+  min-width: 50px;
+  max-width: 50px;
 }
 
 .dark-mode .home-button {
