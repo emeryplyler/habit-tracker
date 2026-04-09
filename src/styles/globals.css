@@ -113,3 +113,9 @@ input {
 .dark-mode .question-button {
   content: url("../../public/question_light.svg");
 }
+
+/* Styling for edit habit page */
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}

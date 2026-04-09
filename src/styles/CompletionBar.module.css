@@ -6,12 +6,18 @@
     overflow: hidden;
 }
 
+.empty.completionFill {
+    background-color: var(--background);
+}
+
 .completionFill {
     background-color: #54b4d1;
+    transition: background-color 1s;
 }
 
 .overCompletionFill {
     background-color: #5a9e5c;
+    transition: background-color 1s;
 }
 
 .completionFill, .overCompletionFill {

@@ -44,7 +44,7 @@ export const config = {
         "/account/:id*",
         "/login",
         "/signup",
-        "/habits",
-        "/habits/:id*"
+        // "/habits",
+        // "/habits/:id*"
     ]
 };

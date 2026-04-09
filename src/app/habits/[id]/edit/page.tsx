@@ -32,20 +32,29 @@ export default function HabitEditPage() {
         // call db and update
         try {
             const response = await axios.patch(`/api/habits/updateone/${id}`, habit);
-            if (response.status !== 200) {
-                throw new Error("Failed to update habit");
-            }
-            router.push("/habits"); // redirect to habits page after update
+            
+            router.push("/"); // redirect to habits page after update
             toast.success("Habit updated successfully");
         } catch (error: any) {
-            toast.error("Failed to update habit: " + error.message);
+            toast.error("Failed to update habit: " + error.response.data.error);
+        }
+    }
+
+    const deleteHabit = async () => {
+        try {
+            const response = await axios.delete(`/api/habits/deleteone/${id}`);
+
+            router.push("/"); // redirect to habits page after deletion
+            toast.success("Habit deleted successfully");
+        } catch (error: any) {
+            toast.error("Failed to delete habit: " + error.response.data.error);
         }
     }
 
     useEffect(() => { getHabit(); }, []); // retrieve habit on page load
 
     return (
-        <div>
+        <div className="habit-edit-page">
             <h1>Edit Habit</h1>
             {loading && <p>Loading...</p>}
             {habit && !loading && (
@@ -102,7 +111,11 @@ export default function HabitEditPage() {
                         onChange={(e) => setHabit({ ...habit, goalCount: parseInt(e.target.value) })}
                     />
 
-                    <button type="submit">Update Habit</button>
+                    <div className="buttons">
+                        <button type="submit">Update Habit</button>
+                        <button type="button" onClick={deleteHabit}>Delete</button>
+                    </div>
+
                 </form>
             )}
             {!habit && !loading && <p>Habit not found</p>}
