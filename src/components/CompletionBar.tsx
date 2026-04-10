@@ -17,6 +17,7 @@ const CompletionBar = ({ percentComplete }: { percentComplete: number; }) => {
         width = "8%";
         small = styles.small;
     }
+    // note: minimum width should be 40px for mobile
 
     return (
         <div className={styles.completionBar}>
