@@ -18,20 +18,20 @@ const testModel = {
 describe('test habitService', () => {
 
   beforeAll(() => {
-    jest.spyOn(mongoose.Types.ObjectId, 'isValid').mockReturnValue(true);
+    jest.spyOn(mongoose.Types.ObjectId, 'isValid').mockReturnValue(true); // make sure all ObjectId strings are considered valid for testing purposes
   });
 
   afterAll(() => {
     jest.restoreAllMocks();
   });
 
-  test('getHabitById: no error when user is not defined, ', async () => {
+  test('getHabitById: service returns habit, ', async () => {
 
     // Arrange
     mockingoose(HabitModel).toReturn(testModel, 'findOne');
 
     // Act
-    const actual: Habit = await getHabitById("111111111111111111111111");
+    const actual: Habit = await getHabitById("111");
 
     // Assert
     expect(actual.difficulty).toBe(3);
