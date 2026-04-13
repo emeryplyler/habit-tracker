@@ -17,7 +17,7 @@ export function proxy(request: NextRequest) {
 
     const path = request.nextUrl.pathname; // get current location
 
-    const isPublicPath = path === "/login" || path === "/signup" || path === "/";
+    const isPublicPath = path === "/login" || path === "/signup" || path === "/" || path === "/about";
 
     const token = request.cookies.get("token")?.value || "";
     const validToken = isValidToken(token);
@@ -44,6 +44,7 @@ export const config = {
         "/account/:id*",
         "/login",
         "/signup",
+        "/about"
         // "/habits",
         // "/habits/:id*"
     ]
