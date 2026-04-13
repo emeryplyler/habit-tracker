@@ -2,7 +2,7 @@ import mockingoose from 'mockingoose';
 const mongoose = require('mongoose');
 import { HabitModel } from "../../src/models/habitModel";
 import { getHabitById } from "../../src/services/habitService";
-import { goalStatuses, Habit } from "../../src/types/Habits";
+import { Habit } from "../../src/types/Habits";
 
 const testModel = {
   _id: '111111111111111111111111',
@@ -17,45 +17,6 @@ const testModel = {
 
 let eightDaysAgo = new Date();
 eightDaysAgo.setDate(eightDaysAgo.getDate() - 8); // subtract 8 days
-
-let mostRecentMonday = new Date();
-const dayOfWeek = mostRecentMonday.getDay();
-const daysSinceLastMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
-mostRecentMonday.setDate(mostRecentMonday.getDate() - daysSinceLastMonday); // find the most recent monday
-mostRecentMonday.setHours(0, 0, 0, 0); // set to start of that monday
-
-const dateModel1 = {
-  _id: '111111111111111111111111',
-  name: 'name',
-  frequency: 'daily',
-  difficulty: 1,
-  currentCycleStart: eightDaysAgo, // date in past
-  goalCount: 2,
-  user: '111111111111111111111111',
-  completeCount: 5
-};
-
-const dateModel2 = {
-  _id: '111111111111111111111111',
-  name: 'name',
-  frequency: 'weekly',
-  difficulty: 2,
-  currentCycleStart: eightDaysAgo, // more than one week ago; should trigger cycle reset
-  goalCount: 3,
-  user: '111111111111111111111111',
-  completeCount: 3
-};
-
-const dateModel3 = {
-  _id: '111111111111111111111111',
-  name: 'name',
-  frequency: 'weekly',
-  difficulty: 1,
-  currentCycleStart: mostRecentMonday, // should not trigger cycle reset
-  goalCount: 3,
-  user: '111111111111111111111111',
-  completeCount: 3
-};
 
 describe('test habitService', () => {
 
@@ -95,6 +56,17 @@ describe('test habitService', () => {
 
   test('getHabitById: update cycle start and reset completeCount for daily habit', async () => {
     // arrange
+    const dateModel1 = {
+      _id: '111111111111111111111111',
+      name: 'name',
+      frequency: 'daily',
+      difficulty: 1,
+      currentCycleStart: eightDaysAgo, // date in past
+      goalCount: 2,
+      user: '111111111111111111111111',
+      completeCount: 5
+    };
+
     mockingoose(HabitModel).toReturn(dateModel1, 'findOne'); // arrange findOne to return a habit with currentCycleStart in the past
 
     // act
@@ -107,6 +79,17 @@ describe('test habitService', () => {
 
   test('getHabitById: update cycle start and reset completeCount for weekly habit', async () => {
     // Arrange
+    const dateModel2 = {
+      _id: '111111111111111111111111',
+      name: 'name',
+      frequency: 'weekly',
+      difficulty: 2,
+      currentCycleStart: eightDaysAgo, // more than one week ago; should trigger cycle reset
+      goalCount: 3,
+      user: '111111111111111111111111',
+      completeCount: 3
+    };
+
     mockingoose(HabitModel).toReturn(dateModel2, 'findOne'); // return weekly habit with cycle start more than one week ago
 
     // Act
@@ -117,8 +100,25 @@ describe('test habitService', () => {
     expect(actual.goalStatus).toBe('incomplete'); // goalStatus should be 'incomplete'
   });
 
-  test('getHabitById: do not update cycle start or reset completeCount if not necessary', async () => {
+  test('getHabitById: do not update cycle start or reset completeCount because not necessary', async () => {
     // Arrange
+    let mostRecentMonday = new Date();
+    const dayOfWeek = mostRecentMonday.getDay();
+    const daysSinceLastMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+    mostRecentMonday.setDate(mostRecentMonday.getDate() - daysSinceLastMonday); // find the most recent monday
+    mostRecentMonday.setHours(0, 0, 0, 0); // set to start of that monday
+
+    const dateModel3 = {
+      _id: '111111111111111111111111',
+      name: 'name',
+      frequency: 'weekly',
+      difficulty: 1,
+      currentCycleStart: mostRecentMonday, // should not trigger cycle reset
+      goalCount: 3,
+      user: '111111111111111111111111',
+      completeCount: 3
+    };
+
     mockingoose(HabitModel).toReturn(dateModel3, 'findOne'); // return weekly habit with cycle start at most recent monday, so it should not trigger cycle reset
 
     // Act
