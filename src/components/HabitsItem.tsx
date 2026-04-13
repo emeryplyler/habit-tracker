@@ -6,14 +6,9 @@ import { HabitsItemProps } from '@/types/Habits';
 import CompletionBar from './CompletionBar';
 import DifficultyBar from './DifficultyBar';
 
-const HabitsItem = ({ habit, incrementComplete, deleteHabit }: HabitsItemProps) => {
+const HabitsItem = ({ habit, incrementComplete }: HabitsItemProps) => {
 
     const increment = () => incrementComplete(habit.id!);
-    const del = () => deleteHabit(habit.id!);
-
-    // calculate goalstatus percentage for styling
-
-    // calculate difficulty for styling
 
     return (
         <li className={`${styles.habit} ${styles[habit.goalStatus!]}`}>
@@ -32,7 +27,6 @@ const HabitsItem = ({ habit, incrementComplete, deleteHabit }: HabitsItemProps) 
                 <DifficultyBar difficulty={habit.difficulty} />
             </div>
             <p className={styles.description}>{habit.description}</p>
-            {/* <button className={styles.button} onClick={del}>Delete this habit</button> */}
         </li>
     );
 };

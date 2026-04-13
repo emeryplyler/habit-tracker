@@ -15,7 +15,6 @@ export interface Habit {
 export interface HabitsItemProps {
     habit: Habit
     incrementComplete: (habitId: string) => void;
-    deleteHabit: (habitId: string) => void;
 }
 
 export enum goalStatuses {

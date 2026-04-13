@@ -93,21 +93,6 @@ export default function Home() {
     }
   };
 
-  const deleteHabit = async (habitId: string) => {
-    try {
-      const response = await axios.delete(`/api/habits/deleteone/${habitId}`);
-      if (response.status === 200) {
-        // Remove habit from local state
-        setHabits(prevHabits => prevHabits.filter(habit => habit._id !== habitId));
-        toast.success("Habit deleted");
-      } else {
-        throw new Error("Failed to delete habit");
-      }
-    } catch (error: any) {
-      toast.error(error.message);
-    }
-  };
-
   return (
     <div className="homepage">
       <main className="homepage-main">
@@ -135,8 +120,7 @@ export default function Home() {
                 <HabitsItem
                   key={habit._id}
                   habit={habit}
-                  incrementComplete={incrementCount}
-                  deleteHabit={deleteHabit}>
+                  incrementComplete={incrementCount}>
                 </HabitsItem>
               );
 
