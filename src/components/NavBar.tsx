@@ -55,15 +55,12 @@ const NavBar = () => {
         <div className={styles.navbar}>
             <div className={styles.homeItems}>
                 <Link href="/">
-                    <img className="home-button" src="home.svg" alt="Home" />
+                    <img className="home-button" src="/home.svg" alt="Home" />
                 </Link>
                 <h1 className={styles.trackerTitle}>Habit Tracker</h1>
-                <div className={styles.questionButton}>
-                    <img className="question-button" src="question.svg" />
-                    <div className={styles.tooltip}>
-                        <p>Currently, all daily habits reset at midnight and all weekly habits reset midnight on Monday.</p>
-                    </div>
-                </div>
+                <Link href="/about" className={styles.questionButton}>
+                    <img className="question-button" src="/question.svg" alt="Help" />
+                </Link>
             </div>
 
             <div className={styles.accountItems}>

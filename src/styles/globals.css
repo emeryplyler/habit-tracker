@@ -5,8 +5,7 @@
   --foreground: #171717;
   --background-2: #d6dbd2;
   --background-3: #bbc7a4;
-  --accent: #e75a7c;
-  color-scheme: light dark;
+  --accent: #87c0b1;
   --habit-button: #81a1c5;
 }
 
@@ -15,8 +14,11 @@
   --foreground: #ffffff;
   --background-2: #111827;
   --background-3: #28395e;
+  --accent: #4a8372;
   --habit-button: #3c6ba0;
 }
+
+/* Change alignments when screen width is less than 710px */
 
 @theme inline {
   --color-background: var(--background);
@@ -62,9 +64,13 @@ label {
 
 input {
   padding: 0.5em;
-  border: 1px solid #ccc;
   border-radius: 5px;
-  width: max-content;
+  width: fit-content;
+}
+
+textarea {
+  padding: 0.5em;
+  border-radius: 5px;
 }
 
 .instead-link {
@@ -115,6 +121,29 @@ input {
 }
 
 /* Styling for edit habit page */
+
+.habit-edit-page form {
+  background-color: var(--background-2);
+  padding: 2em;
+  border-radius: 10px;
+  max-width: 60%;
+}
+
+.habit-edit-page form input, .habit-edit-page form textarea, .habit-edit-page form select {
+  background-color: var(--background);
+}
+
+.habit-edit-page select {
+  max-width: fit-content;
+  padding: 0.5em;
+  border-radius: 5px;
+}
+
+.habit-edit-page div label {
+  font-weight: normal;
+  margin-right: 0.5em;
+}
+
 .buttons {
   display: flex;
   justify-content: space-between;

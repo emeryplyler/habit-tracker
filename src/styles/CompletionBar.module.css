@@ -4,10 +4,11 @@
     background-color: #f0f0f0;
     border-radius: 10px;
     overflow: hidden;
+    color: black;
 }
 
 .empty.completionFill {
-    background-color: var(--background);
+    background-color: transparent;
 }
 
 .completionFill {
