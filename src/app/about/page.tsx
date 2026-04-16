@@ -8,7 +8,7 @@ export default function AboutPage() {
         <div>
             <h1>About</h1>
             <div>
-                <p></p>
+                <p>this is the about page</p>
             </div>
             <Toaster />
         </div>

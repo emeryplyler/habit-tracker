@@ -96,7 +96,7 @@ export default function Home() {
   return (
     <div className="homepage">
       <main className="homepage-main">
-        {!user && (
+        {!loading && !user && (
           <div>
             <h1 className="homepage-title">Welcome to Habit Tracker!</h1>
             <p className="homepage-description">Keep track of your daily and weekly habits to build up routines.</p>

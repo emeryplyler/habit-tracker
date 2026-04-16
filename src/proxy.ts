@@ -22,13 +22,6 @@ export function proxy(request: NextRequest) {
     const token = request.cookies.get("token")?.value || "";
     const validToken = isValidToken(token);
 
-    if (isPublicPath && validToken) { // NOTE: for some reason, if you take out the '&& token' part it doesn't redirect correctly and firefox won't show it to me
-        // user can visit public path
-        if (path != "/") {
-            return NextResponse.redirect(new URL("/", request.nextUrl));
-        }
-    }
-
     if (!isPublicPath && !validToken) {
         // user is not logged in, so they can't visit this path; prompt user to log in
         return NextResponse.redirect(new URL("/login", request.nextUrl));
@@ -45,7 +38,5 @@ export const config = {
         "/login",
         "/signup",
         "/about"
-        // "/habits",
-        // "/habits/:id*"
     ]
 };

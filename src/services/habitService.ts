@@ -161,6 +161,7 @@ export async function editHabit(updates: Partial<Habit>): Promise<Habit> {
 
 export async function deleteHabit(delHabit: Habit, userId: string): Promise<void> {
     // check if user's current id matches habit's user id to verify ownership; if not, throw error
+    // NOTE: if this were a real company project, I would add better authentication + authorization
     if (delHabit.userId !== userId) {
         throw new Error("Not authorized to delete this habit");
     }
