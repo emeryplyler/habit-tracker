@@ -99,7 +99,7 @@ export default function Home() {
         {!loading && !user && (
           <div>
             <h1 className="homepage-title">Welcome to Habit Tracker!</h1>
-            <p className="homepage-description">Keep track of your daily and weekly habits to build up routines.</p>
+            <p className="homepage-description">Keep track of your daily and weekly habits to build up routines. Log in, or sign up for free to get started!</p>
           </div>
         )}
 

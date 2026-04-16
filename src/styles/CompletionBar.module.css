@@ -9,7 +9,6 @@
 
 .empty.completionFill {
     background-color: transparent;
-    /* transition: background-color 1s; */
 }
 
 .completionFill {
@@ -18,7 +17,6 @@
 
 .completionFill.overCompletionFill {
     background-color: #5a9e5c;
-    /* transition: background-color 1s; */
 }
 
 .completionFill, .overCompletionFill {

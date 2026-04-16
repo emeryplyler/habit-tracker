@@ -32,6 +32,11 @@ h1 {
   margin: 1em 0 0.5em 0;
 }
 
+h2 {
+  font-size: 1.5em;
+  margin: 1em 0 0.5em 0;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
@@ -74,8 +79,6 @@ textarea {
 }
 
 .instead-link {
-  text-align: center;
-  margin: 1em auto;
   text-decoration: underline;
 }
 

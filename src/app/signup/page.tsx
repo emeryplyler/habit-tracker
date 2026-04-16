@@ -34,7 +34,6 @@ export default function SignupPage() {
     return (
         <div>
             <h1>Create an account</h1>
-            <hr />
             <form action={onSignup}>
                 <label htmlFor="username">Username</label>
                 <input
@@ -77,8 +76,9 @@ export default function SignupPage() {
 
                 {loading && <p>Loading...</p>}
 
+                <Link className="instead-link" href={"/login"}>Log in instead</Link>
             </form>
-            <Link className="instead-link" href={"/login"}>Log in instead</Link>
+
             <Toaster />
         </div>
     );
