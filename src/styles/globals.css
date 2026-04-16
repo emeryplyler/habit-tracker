@@ -116,41 +116,14 @@ textarea {
 }
 
 .dark-mode .home-button {
-  content: url("../../public/home_light.svg");
+  content: url("../../public/home_light.png");
 }
 
 .dark-mode .question-button {
-  content: url("../../public/question_light.svg");
+  content: url("../../public/info_light.png");
 }
 
-/* Styling for edit habit page */
-
-/* .habit-edit-page form {
-  background-color: var(--background-2);
-  padding: 2em;
-  border-radius: 10px;
-  max-width: 60%;
-}
-
-.habit-edit-page form input, .habit-edit-page form textarea, .habit-edit-page form select {
-  background-color: var(--background);
-}
-
-.habit-edit-page select {
-  max-width: fit-content;
-  padding: 0.5em;
-  border-radius: 5px;
-}
-
-.habit-edit-page div label {
-  font-weight: normal;
-  margin-right: 0.5em;
-}
-
-.buttons {
-  display: flex;
-  justify-content: space-between;
-} */
+/* Styling for edit habit and create habit pages */
 
 form {
   background-color: var(--background-2);

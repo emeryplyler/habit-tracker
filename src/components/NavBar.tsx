@@ -55,11 +55,11 @@ const NavBar = () => {
         <div className={styles.navbar}>
             <div className={styles.homeItems}>
                 <Link href="/">
-                    <img className="home-button" src="/home.svg" alt="Home" />
+                    <img className="home-button" src="/home.png" alt="Home" />
                 </Link>
                 <h1 className={styles.trackerTitle}>Habit Tracker</h1>
                 <Link href="/about" className={styles.questionButton}>
-                    <img className="question-button" src="/question.svg" alt="Help" />
+                    <img className="question-button" src="/info.png" alt="Help" />
                 </Link>
             </div>
 
