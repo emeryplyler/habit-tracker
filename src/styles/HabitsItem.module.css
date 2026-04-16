@@ -11,13 +11,14 @@
 
 .progressItems, .statusItems {
     width: 45%;
-}
-
-.progressItems {
     display: flex;
     flex-flow: column wrap;
     justify-content: center;
-    gap: 1em;
+}
+
+.statusItems {
+    align-items: end;
+    display: flex;
 }
 
 .nameAndButton {

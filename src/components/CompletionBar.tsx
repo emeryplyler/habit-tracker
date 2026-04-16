@@ -6,7 +6,7 @@ const CompletionBar = ({ percentComplete }: { percentComplete: number; }) => {
     let percentStyle = `${styles.completionFill}`;
     let width = `${percentComplete}%`;
     let small = "";
-    if (percentComplete > 100) {
+    if (percentComplete >= 100) {
         percentStyle = `${styles.completionFill} ${styles.overCompletionFill}`;
         width = "100%";
     } else if (percentComplete <= 0) {

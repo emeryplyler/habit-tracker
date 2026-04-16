@@ -6,6 +6,8 @@
     position: relative;
     display: flex;
     align-items: center;
+    min-width: 100px;
+    width: 15vw;
 }
 
 .completionFill {

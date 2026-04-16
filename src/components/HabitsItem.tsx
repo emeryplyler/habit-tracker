@@ -14,7 +14,7 @@ const HabitsItem = ({ habit, incrementComplete }: HabitsItemProps) => {
     let desc = habit.description && habit.description.length > 0;
 
     return (
-        <li className={`${styles.habit} ${styles[habit.goalStatus!]}`}>
+        <li className={styles.habit}>
             <div className={styles.progressItems}>
                 <div className={styles.nameAndButton}>
                     <h3 className={styles.habitName}>
