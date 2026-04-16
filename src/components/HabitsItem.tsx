@@ -5,6 +5,7 @@ import styles from "../styles/HabitsItem.module.css";
 import { HabitsItemProps } from '@/types/Habits';
 import CompletionBar from './CompletionBar';
 import DifficultyBar from './DifficultyBar';
+import FrequencyLabel from './Frequency';
 
 const HabitsItem = ({ habit, incrementComplete }: HabitsItemProps) => {
 
@@ -25,7 +26,7 @@ const HabitsItem = ({ habit, incrementComplete }: HabitsItemProps) => {
             </div>
             <div className={styles.statusItems}>
                 <div className={styles.frequencyAndEdit}>
-                    <p>{habit.frequency}</p>
+                    <FrequencyLabel freq={habit.frequency} goal={habit.goalCount} />
                     <Link href={`/habits/${habit.id}/edit`}>
                         <button className={styles.edit}>Edit</button>
                     </Link>
