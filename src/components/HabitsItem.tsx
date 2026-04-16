@@ -10,14 +10,14 @@ const HabitsItem = ({ habit, incrementComplete }: HabitsItemProps) => {
 
     const increment = () => incrementComplete(habit.id!);
 
-    const edit = () => { };
+    let desc = habit.description && habit.description.length > 0;
 
     return (
         <li className={`${styles.habit} ${styles[habit.goalStatus!]}`}>
             <div className={styles.progressItems}>
                 <div className={styles.nameAndButton}>
                     <h3 className={styles.habitName}>
-                        {habit.name}<span className={styles.arrow}> ▶</span>
+                        {habit.name}{desc && (<span className={styles.arrow}> ▶</span>)}
                     </h3>
                     <button className={styles.button} onClick={increment}>I just did this</button>
                 </div>
@@ -32,7 +32,7 @@ const HabitsItem = ({ habit, incrementComplete }: HabitsItemProps) => {
                 </div>
                 <DifficultyBar difficulty={habit.difficulty} />
             </div>
-            <p className={styles.description}>{habit.description}</p>
+            {desc && (<p className={styles.description}>{habit.description}</p>)}
         </li>
     );
 };

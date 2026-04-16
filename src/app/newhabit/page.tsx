@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
@@ -42,7 +42,6 @@ export default function HabitsPage() {
     return (
         <div>
             <h1>Create New Habit</h1>
-            <hr />
             <form action={submitNewHabit}>
                 <label htmlFor="name">Name</label>
                 <input
@@ -60,7 +59,8 @@ export default function HabitsPage() {
                     onChange={(e) => setHabit({ ...habit, description: e.target.value })}
                 />
 
-                <p>Frequency
+                <label>Frequency</label>
+                <div>
                     <label>
                         {/* Note: technically, we don't need to put 'required' on both, since they're both name=frequency */}
                         <input type="radio" name="frequency" value="daily" required
@@ -74,7 +74,7 @@ export default function HabitsPage() {
                         />
                         Weekly
                     </label>
-                </p>
+                </div>
 
                 <label htmlFor="notes">Notes</label>
                 <textarea
@@ -106,13 +106,6 @@ export default function HabitsPage() {
                 <button type="submit">Submit</button>
             </form>
 
-
-            {/* <button
-                onClick={submitNewHabit}
-                className="newHabitSubmitButton"
-            >
-                Submit
-            </button> */}
             <Toaster />
         </div>
     );

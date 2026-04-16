@@ -5,10 +5,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    /* padding: 1em 0em; */
-    /* background-color: var(--background-2); */
-    border-radius: 10px;
-    /* width: fit-content; */
+    min-height: 103px;
 }
 
 .accountItems,

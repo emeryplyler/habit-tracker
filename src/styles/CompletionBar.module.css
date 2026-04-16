@@ -9,21 +9,22 @@
 
 .empty.completionFill {
     background-color: transparent;
+    /* transition: background-color 1s; */
 }
 
 .completionFill {
     background-color: #54b4d1;
-    transition: background-color 1s;
 }
 
-.overCompletionFill {
+.completionFill.overCompletionFill {
     background-color: #5a9e5c;
-    transition: background-color 1s;
+    /* transition: background-color 1s; */
 }
 
 .completionFill, .overCompletionFill {
     height: 100%;
     transition: width 0.5s ease-in-out;
+    transition: background-color 1s;
     text-align: center;
     display: flex;
     align-items: center;

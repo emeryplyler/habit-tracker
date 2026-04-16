@@ -12,15 +12,6 @@ export async function POST(request: NextRequest) {
         const reqBody = await request.json();
         const { username, password, nickname } = reqBody;
 
-        // // does user already exist?
-        // const user = await UserModel.findOne({ username });
-        // if (user) {
-        //     return NextResponse.json(
-        //         { error: "A user is already registered with that username" },
-        //         { status: 400 }
-        //     );
-        // }
-
         // hash password to store in db
         const salt = await bcrypt.genSalt();
         const hashedPassword = await bcrypt.hash(password, salt);
