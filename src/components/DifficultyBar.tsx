@@ -6,15 +6,17 @@ const DifficultyBar = ({ difficulty }: { difficulty: number; }) => {
     let width = `${difficulty / 5 * 100}%`;
 
     return (
-        <div className={styles.completionBar}>
-            <p className={styles.easy}>Easy</p>
-            <div
-                className={styles.completionFill}
-                style={{ width: width }}
-            >
+        <div className={styles.base}>
+            <p className={styles.label}>Difficulty: {difficulty}/5</p>
+            <div className={styles.completionBar}>
+                <div
+                    className={`${styles.completionFill} ${styles[`bgc${difficulty}`]}`}
+                    style={{ width: width }}
+                >
+                </div>
             </div>
-            <p className={styles.hard}>Hard</p>
         </div>
+
 
     );
 };

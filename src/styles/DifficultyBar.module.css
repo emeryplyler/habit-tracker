@@ -1,3 +1,11 @@
+.base {
+    position: relative;
+    overflow: visible;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
 .completionBar {
     height: 2em;
     background-color: #f0f0f0;
@@ -16,20 +24,24 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #7c7c7c;
 }
 
-.easy {
-    position: absolute;
-    /* top: -20px; */
-    left: 5px;
-    color: black;
+.bgc1 {
+    background-color: #e7d257;
 }
 
-.hard {
-    position: absolute;
-    /* top: -20px; */
-    /* left: 50%; */
-    right: 5px;
-    color: black;
+.bgc2 {
+    background-color: #e9a751;
+}
+
+.bgc3 {
+    background-color: #e7702b;
+}
+
+.bgc4 {
+    background-color: #e63d31;
+}
+
+.bgc5 {
+    background-color: #b12b36;
 }
