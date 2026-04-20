@@ -21,8 +21,7 @@
 
 .completionFill, .overCompletionFill {
     height: 100%;
-    transition: width 0.5s ease-in-out;
-    transition: background-color 1s;
+    transition: width 0.5s ease-in-out, background-color 1s;
     text-align: center;
     display: flex;
     align-items: center;
