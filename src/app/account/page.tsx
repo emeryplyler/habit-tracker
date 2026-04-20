@@ -53,15 +53,18 @@ export default function AccountPage() {
 
     // handle light/dark mode
     const [isDarkMode, setIsDarkMode] = useState(false);
-    const toggleDarkMode = () => {
+    const toggleDarkMode = async () => {
         let body = document.body;
-        if (isDarkMode) {
+        const mode = isDarkMode;
+        if (mode) {
             body.classList.remove("dark-mode");
             setIsDarkMode(false);
         } else {
             body.classList.add("dark-mode");
             setIsDarkMode(true);
         }
+        // send inverted mode to api
+        await axios.post("/api/setmode", { mode: mode? "light" : "dark" }); // send new mode to api to set cookie
     };
 
     return (

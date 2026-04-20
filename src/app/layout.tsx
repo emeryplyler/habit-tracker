@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../styles/globals.css";
 import NavBar from "../components/NavBar";
+import { cookies } from "next/headers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,19 +20,20 @@ export const metadata: Metadata = {
   title: "Habitracker",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default async function RootLayout({ children, }: Readonly<{ children: React.ReactNode; }>) {
+
+  // read light/dark mode cookie
+  const cookieStore = await cookies();
+  const mode = cookieStore.get("mode")?.value || "light"; // default to light mode
+
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased ${mode === "dark" ? "dark-mode" : ""}`}
       >
-          {/* Insert custom nav-bar component */}
-          <NavBar />
-          {children}
+        {/* Insert custom nav-bar component */}
+        <NavBar />
+        {children}
       </body>
     </html>
   );
