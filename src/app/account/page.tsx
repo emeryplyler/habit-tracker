@@ -64,20 +64,28 @@ export default function AccountPage() {
             setIsDarkMode(true);
         }
         // send inverted mode to api
-        await axios.post("/api/setmode", { mode: mode? "light" : "dark" }); // send new mode to api to set cookie
+        await axios.post("/api/setmode", { mode: mode ? "light" : "dark" }); // send new mode to api to set cookie
     };
 
     return (
         <div>
-            <h1>Account Settings</h1>
+            <h1>Account</h1>
             <div>
                 {loading ? "Loading..." : (<>
                     <hr />
                     <h2>{user ? <Link href={`/account/${user.id}`}>Profile</Link> : "No user found"}</h2>
+                    {user && (
+                        <>
+                            <p>Username: {user.username}</p>
+                            <p>Nickname: {user.nickname}</p>
+                            <button onClick={logout}>Log Out</button>
+                        </>
+                    )}
+                    <br />
                     <hr />
+                    <h2>Preferences</h2>
                     <button onClick={toggleDarkMode}>Change color scheme</button>
-                    <p>{isDarkMode ? "Dark Mode" : "Light Mode"}</p>
-                    <button onClick={logout}>Log Out</button>
+                    <p>Color scheme is set to {isDarkMode ? "Dark Mode" : "Light Mode"}</p>
                 </>)}
             </div>
             <Toaster />
