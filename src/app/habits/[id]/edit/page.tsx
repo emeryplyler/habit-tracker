@@ -14,7 +14,7 @@ export default function HabitEditPage() {
 
     const getHabit = async () => {
         try {
-            const response = await axios.get(`/api/habits/getone/${id}`);
+            const response = await axios.get(`/api/habits/${id}`);
             if (response.status !== 200 || !response.data.data) {
                 throw new Error("Habit not found");
             }
@@ -31,7 +31,7 @@ export default function HabitEditPage() {
     const updateHabit = async () => {
         // call db and update
         try {
-            const response = await axios.patch(`/api/habits/updateone/${id}`, habit);
+            const response = await axios.patch(`/api/habits/${id}`, habit);
             
             router.push("/"); // redirect to habits page after update
             toast.success("Habit updated successfully");
@@ -42,7 +42,7 @@ export default function HabitEditPage() {
 
     const deleteHabit = async () => {
         try {
-            const response = await axios.delete(`/api/habits/deleteone/${id}`);
+            const response = await axios.delete(`/api/habits/${id}`);
 
             router.push("/"); // redirect to habits page after deletion
             toast.success("Habit deleted successfully");

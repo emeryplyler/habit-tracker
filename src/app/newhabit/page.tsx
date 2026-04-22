@@ -26,7 +26,7 @@ export default function HabitsPage() {
         try {
             // add new habit to db
             setLoading(true);
-            const response = await axios.post("/api/habits/create", habit);
+            const response = await axios.post("/api/habits", habit);
             // redirect user to habits
             toast.success("Habit created!");
             router.push("/");

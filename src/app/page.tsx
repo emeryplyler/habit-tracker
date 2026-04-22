@@ -21,7 +21,7 @@ export default function Home() {
       // retrieve information about each habit
       // Use Promise.all to wait for all async operations
       const habitPromises = response.data.user.habits.map(async (id: any) => {
-        const found = await axios.get(`/api/habits/getone/${id}`);
+        const found = await axios.get(`/api/habits/${id}`);
         // if habit is successfully found, return it, otherwise return null
         return found.status === 200 && found.data.data ? found.data.data : null;
       });
@@ -61,7 +61,7 @@ export default function Home() {
     try {
       await incrementCountDB(habitId); // Wait for DB update
       // if update is successful, retrieve updated habit info to get updated goal status
-      const response = await axios.get(`/api/habits/getone/${habitId}`);
+      const response = await axios.get(`/api/habits/${habitId}`);
       setHabits(prevHabits =>
         prevHabits.map(habit => {
           if (habit._id === habitId) {
@@ -87,7 +87,7 @@ export default function Home() {
 
   const incrementCountDB = async (habitId: string) => {
     // update completeCount in DB by sending increment value
-    const response = await axios.patch(`/api/habits/updateone/${habitId}`, { incrementCompleteCount: 1 }); // send increment value in request body
+    const response = await axios.patch(`/api/habits/${habitId}`, { incrementCompleteCount: 1 }); // send increment value in request body
     if (response.status !== 200) {
       throw new Error("Failed to update habit online");
     }
