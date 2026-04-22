@@ -16,7 +16,7 @@
 
 .accountItems {
     flex-direction: column;
-    justify-content:center;
+    justify-content: center;
     align-items: center;
     margin-top: 1em;
 }
@@ -109,4 +109,19 @@
     display: flex;
     background-color: var(--background-2);
     border-color: var(--foreground);
+}
+
+@media (max-width: 500px) {
+    .questionButton {
+        min-width: 10vw;
+        max-width: 10vw;
+    }
+
+    .currentUser {
+        font-size: 1em;
+    }
+
+    .dropdownButton {
+        font-size: 0.8em;
+    }
 }

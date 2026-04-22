@@ -18,7 +18,7 @@
   --habit-button: #3c6ba0;
 }
 
-/* Change alignments when screen width is less than 710px */
+
 
 @theme inline {
   --color-background: var(--background);
@@ -93,6 +93,7 @@ textarea {
   text-align: center;
   width: fit-content;
   margin: 0em 2em;
+  text-wrap: nowrap;
 }
 
 .new-habit-link:hover {
@@ -150,4 +151,39 @@ form div label {
 .buttons {
   display: flex;
   justify-content: space-between;
+}
+
+/* Change alignments when screen width is less than 500px */
+@media (max-width: 500px) {
+  body {
+    min-width: 300px;
+  }
+
+  h1 {
+    font-size: 1.25em;
+    margin: 1em 0 0.5em 0;
+  }
+
+  .habits-bar h1 {
+    font-size: 1.1em;
+    margin: 0.5em 0;
+    text-wrap: nowrap;
+  }
+
+  .home-button {
+    min-width: 10vw;
+    max-width: 10vw;
+  }
+
+  .new-habit-link {
+    padding: 10px;
+    background-color: var(--background-2);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    width: fit-content;
+    margin: 0em 2em;
+    font-size: 0.8em;
+  }
 }

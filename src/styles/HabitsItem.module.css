@@ -30,7 +30,7 @@
 }
 
 .button {
-    min-width: 109px;
+    text-wrap: nowrap;
 }
 
 .edit, .button {
@@ -76,4 +76,12 @@
 
 .habitName:hover .arrow {
     opacity: 1;
+}
+
+/* Change alignments when screen width is less than 500px */
+@media (max-width: 500px) {
+    .habit {
+        font-size: 0.7em;
+        padding: 5px;
+    }
 }
