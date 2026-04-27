@@ -1,0 +1,23 @@
+@reference "tailwindcss";
+
+.aboutPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.aboutPage h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.aboutPage p {
+    @apply mb-4;
+}
+
+.piece {
+    background-color: rgba(113, 202, 253, 0.13);
+    @apply w-full px-8 pb-4 rounded-lg shadow-md mb-6;
+}
