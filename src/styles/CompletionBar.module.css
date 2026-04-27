@@ -1,10 +1,5 @@
 .completionBar {
-    width: 100%;
-    height: 2em;
-    background-color: #f0f0f0;
-    border-radius: 10px;
-    overflow: hidden;
-    color: black;
+    @apply w-full h-[2em] bg-[#f0f0f0] rounded-[10px] overflow-hidden text-[black];
 }
 
 .empty.completionFill {
@@ -20,10 +15,6 @@
 }
 
 .completionFill, .overCompletionFill {
-    height: 100%;
+    @apply h-full text-center flex items-center justify-center;
     transition: width 0.5s ease-in-out, background-color 1s;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }

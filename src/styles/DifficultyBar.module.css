@@ -1,29 +1,13 @@
 .base {
-    position: relative;
-    overflow: visible;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    @apply relative overflow-visible flex items-center gap-[10px];
 }
 
 .completionBar {
-    height: 2em;
-    background-color: #f0f0f0;
-    border-radius: 10px;
-    overflow: hidden;
-    position: relative;
-    display: flex;
-    align-items: center;
-    min-width: 100px;
-    width: 15vw;
+    @apply h-[2em] bg-[#f0f0f0] rounded-[10px] overflow-hidden relative flex items-center min-w-[100px] w-[15vw];
 }
 
 .completionFill {
-    height: 100%;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    @apply h-full text-center flex items-center justify-between;
 }
 
 .bgc1 {

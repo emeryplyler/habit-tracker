@@ -18,8 +18,6 @@
   --habit-button: #3c6ba0;
 }
 
-
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
