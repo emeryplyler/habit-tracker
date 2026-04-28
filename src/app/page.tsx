@@ -100,6 +100,8 @@ export default function Home() {
           <div>
             <h1 className="homepage-title">Welcome to Habit Tracker!</h1>
             <p className="homepage-description">Keep track of your daily and weekly habits to build up routines. Log in, or sign up for free to get started!</p>
+            <br />
+            <img className="homepage-image" src="/homepage.png" alt="Homepage image" width={800} height={448} />
           </div>
         )}
 
