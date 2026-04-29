@@ -3,7 +3,7 @@
 }
 
 .completionBar {
-    @apply h-[2em] bg-[#f0f0f0] rounded-[10px] overflow-hidden relative flex items-center min-w-[100px] w-[15vw];
+    @apply h-[2em] bg-[#f0f0f0] rounded-[10px] overflow-hidden relative flex items-center min-w-[100px] w-[4vw];
 }
 
 .completionFill {

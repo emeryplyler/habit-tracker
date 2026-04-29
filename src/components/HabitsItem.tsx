@@ -28,7 +28,8 @@ const HabitsItem = ({ habit, incrementComplete }: HabitsItemProps) => {
                 <div className={styles.frequencyAndEdit}>
                     <FrequencyLabel freq={habit.frequency} goal={habit.goalCount} />
                     <Link href={`/habits/${habit.id}/edit`}>
-                        <button className={styles.edit}>Edit</button>
+                        {/* <button className={styles.edit}>Edit</button> */}
+                        <img className='edit-button' src="pencil-icon.svg" alt="Edit" width={30} height={30}/>
                     </Link>
                 </div>
                 <DifficultyBar difficulty={habit.difficulty} />
