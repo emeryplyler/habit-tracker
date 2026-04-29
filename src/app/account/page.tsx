@@ -40,17 +40,6 @@ export default function AccountPage() {
         setIsDarkMode(document.body.classList.contains("dark-mode")); // set dark mode after page load
     }, []);
 
-    // logout button function
-    const logout = async () => {
-        try {
-            await axios.get("/api/users/logout"); // send get request to this path
-            toast.success("Logout successful");
-            router.push("/"); // redirect to homepage
-        } catch (error: any) {
-            toast.error(error.message);
-        }
-    };
-
     // handle light/dark mode
     const [isDarkMode, setIsDarkMode] = useState(false);
     const toggleDarkMode = async () => {
@@ -73,18 +62,17 @@ export default function AccountPage() {
             <div>
                 {loading ? "Loading..." : (<>
                     <hr />
-                    <h2>{user ? <Link href={`/account/${user.id}`}>Profile</Link> : "No user found"}</h2>
+                    <h2>{user ? "Profile" : "No user found"}</h2>
                     {user && (
                         <>
                             <p>Username: {user.username}</p>
                             <p>Nickname: {user.nickname}</p>
-                            <button onClick={logout}>Log Out</button>
                         </>
                     )}
                     <br />
                     <hr />
                     <h2>Preferences</h2>
-                    <button onClick={toggleDarkMode}>Change color scheme</button>
+                    <button onClick={toggleDarkMode} className="my-4">Change color scheme</button>
                     <p>Color scheme is set to {isDarkMode ? "Dark Mode" : "Light Mode"}</p>
                 </>)}
             </div>

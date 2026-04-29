@@ -4,6 +4,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useParams, useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function HabitEditPage() {
     const { id } = useParams(); // params is a promise, so anything depending on params has to be in an async function
@@ -32,13 +33,13 @@ export default function HabitEditPage() {
         // call db and update
         try {
             const response = await axios.patch(`/api/habits/${id}`, habit);
-            
+
             router.push("/"); // redirect to habits page after update
             toast.success("Habit updated successfully");
         } catch (error: any) {
             toast.error("Failed to update habit: " + error.response.data.error);
         }
-    }
+    };
 
     const deleteHabit = async () => {
         try {
@@ -49,7 +50,7 @@ export default function HabitEditPage() {
         } catch (error: any) {
             toast.error("Failed to delete habit: " + error.response.data.error);
         }
-    }
+    };
 
     useEffect(() => { getHabit(); }, []); // retrieve habit on page load
 
@@ -60,7 +61,7 @@ export default function HabitEditPage() {
             {habit && !loading && (
                 <form action={updateHabit}>
                     <label htmlFor="name">Name</label>
-                    <input 
+                    <input
                         id="name"
                         type="text"
                         value={habit.name}
@@ -84,7 +85,7 @@ export default function HabitEditPage() {
                         <label>
                             <input type="radio" name="frequency" value="weekly" checked={habit.frequency === "weekly"} onChange={() => setHabit({ ...habit, frequency: "weekly" })} />
                             Weekly
-                        </label>                        
+                        </label>
                     </div>
 
                     <label htmlFor="notes">Notes</label>
@@ -112,8 +113,13 @@ export default function HabitEditPage() {
                         onChange={(e) => setHabit({ ...habit, goalCount: parseInt(e.target.value) })}
                     />
 
-                    <div className="buttons">
-                        <button type="submit">Update Habit</button>
+                    <div className="buttons mt-8">
+                        <div className="flex gap-4">
+                            <button type="submit">Update</button>
+                            <Link href="/">
+                                <button type="button">Cancel</button>
+                            </Link>
+                        </div>
                         <button type="button" onClick={deleteHabit}>Delete</button>
                     </div>
 

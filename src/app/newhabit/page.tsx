@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import Link from "next/link";
 
 export default function HabitsPage() {
     const router = useRouter(); // get router so we can redirect user
@@ -103,7 +104,13 @@ export default function HabitsPage() {
                     onChange={(e) => setHabit({ ...habit, goalCount: e.target.value })}
                 />
 
-                <button type="submit">Submit</button>
+                <div className="flex gap-4 mt-8">
+                    <button type="submit">Submit</button>
+                    <Link href="/">
+                        <button type="button">Cancel</button>
+                    </Link>
+                </div>
+                
             </form>
 
             <Toaster />
