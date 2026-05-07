@@ -21,8 +21,8 @@ export default function AboutPage() {
             <div className={styles.piece}>
                 <h2>About</h2>
                 <p>
-                    This app was built using Node.js and the Next.js framework, with a MongoDB database for storing habit and user information.
-                    The frontend was built with React and styled using CSS modules, and the app is being hosted on Vercel.
+                    This open-source app was built using Node.js and the Next.js framework, with a MongoDB database for storing habit and user information.
+                    The frontend was built with React and styled using CSS modules and Tailwind, and the app is being hosted on Vercel.
                 </p>
             </div>
             <Link href="https://github.com/emeryplyler/habit-tracker">
