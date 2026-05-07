@@ -2,6 +2,7 @@
 
 import { Toaster } from "react-hot-toast";
 import styles from "@/styles/AboutPage.module.css";
+import Link from "next/link";
 
 export default function AboutPage() {
 
@@ -24,6 +25,9 @@ export default function AboutPage() {
                     The frontend was built with React and styled using CSS modules, and the app is being hosted on Vercel.
                 </p>
             </div>
+            <Link href="https://github.com/emeryplyler/habit-tracker">
+                <img className="repo-button" src="/git.svg" alt="GitHub Repository" width="50px" height="50px" />
+            </Link>
             <Toaster />
         </div>
     );
