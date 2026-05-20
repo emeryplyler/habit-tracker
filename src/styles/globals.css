@@ -6,7 +6,6 @@
   --background-2: #d6dbd2;
   --background-3: #bbc7a4;
   --accent: #87c0b1;
-  --habit-button: #81a1c5;
 }
 
 .dark-mode {
@@ -15,7 +14,6 @@
   --background-2: #111827;
   --background-3: #28395e;
   --accent: #4a8372;
-  --habit-button: #3c6ba0;
 }
 
 @theme inline {
@@ -85,7 +83,7 @@ textarea {
 
 .new-habit-link {
   padding: 10px;
-  background-color: var(--background-2);
+  background-color: var(--accent);
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -189,7 +187,7 @@ form div label {
 
   .new-habit-link {
     padding: 10px;
-    background-color: var(--background-2);
+    background-color: var(--accent);
     border: none;
     border-radius: 5px;
     cursor: pointer;
