@@ -50,16 +50,20 @@ export default function Home() {
     try {
       const today = new Date();
       const storedQuote = localStorage.getItem("quote");
-      const storedQuoteDate = localStorage.getItem("quoteDate");
+      const storedQuoteDateString = (localStorage.getItem("quoteDate"));
+      const storedQuoteDate = storedQuoteDateString ? new Date(storedQuoteDateString) : null;
 
       // if quote is found and not expired, return it
-      if (storedQuote && storedQuoteDate === today.toDateString()) { // NOTE: do we need to specify Day specifically to compare?
+      console.log("stored date:", storedQuoteDateString, ". today:", today.toDateString());
+      if (storedQuote && storedQuoteDate && storedQuoteDate >= today) { // NOTE: do we need to specify Day specifically to compare?
         setQuote(JSON.parse(storedQuote));
         return;
       }
 
-      // otherwise, find new quote and store
+      // otherwise, find new quote and store 
       const response = await axios.get("/api/quote");
+
+      // timeout?
       
       if (response.status !== 200) {
         throw new Error(`HTTP error with status ${response.status}`);
@@ -70,14 +74,14 @@ export default function Home() {
       if (newQuote) {
         setQuote(newQuote);
         // Store in local storage with expiration time (e.g., 24 hours)
-        const expiryDate = new Date();
-        expiryDate.setDate(expiryDate.getDate() + 1);
-        localStorage.setItem("quote", newQuote);
-        localStorage.setItem("quoteExpiry", expiryDate.toISOString());
+        const newQuoteDate = new Date();
+        newQuoteDate.setDate(newQuoteDate.getDate() + 1);
+        localStorage.setItem("quote", JSON.stringify(newQuote));
+        localStorage.setItem("quoteDate", newQuoteDate.toISOString());
       }
 
     } catch (error) {
-      toast.error("Failed to retrieve quote");
+      // set default quote
       console.error("Error fetching quote:", error);
     }
   }
