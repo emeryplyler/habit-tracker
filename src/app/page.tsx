@@ -13,6 +13,8 @@ export default function Home() {
   const [user, setUser] = useState();
   const [habits, setHabits] = useState<any[]>([]); // type is array of any
 
+  const [quote, setQuote] = useState<{ q: string; a: string } | null>(null);
+
   const getHabits = async () => {
     try {
       // try to get current user
@@ -43,8 +45,46 @@ export default function Home() {
 
   };
 
+  const getQuotes = async () => {
+    // check if quotes are already in local storage and not expired
+    try {
+      const today = new Date();
+      const storedQuote = localStorage.getItem("quote");
+      const storedQuoteDate = localStorage.getItem("quoteDate");
+
+      // if quote is found and not expired, return it
+      if (storedQuote && storedQuoteDate === today.toDateString()) { // NOTE: do we need to specify Day specifically to compare?
+        setQuote(JSON.parse(storedQuote));
+        return;
+      }
+
+      // otherwise, find new quote and store
+      const response = await axios.get("/api/quote");
+      
+      if (response.status !== 200) {
+        throw new Error(`HTTP error with status ${response.status}`);
+      }
+
+      const newQuote = response.data.data[0]; // response is array of quote objects
+
+      if (newQuote) {
+        setQuote(newQuote);
+        // Store in local storage with expiration time (e.g., 24 hours)
+        const expiryDate = new Date();
+        expiryDate.setDate(expiryDate.getDate() + 1);
+        localStorage.setItem("quote", newQuote);
+        localStorage.setItem("quoteExpiry", expiryDate.toISOString());
+      }
+
+    } catch (error) {
+      toast.error("Failed to retrieve quote");
+      console.error("Error fetching quote:", error);
+    }
+  }
+
   useEffect(() => {
     getHabits(); // retrieve user's habits on page load
+    getQuotes();
   }, []);
 
   const incrementCount = async (habitId: string) => {
@@ -102,6 +142,20 @@ export default function Home() {
             <p className="homepage-description">Keep track of your daily and weekly habits to build up routines. Log in, or sign up for free to get started!</p>
             <br />
             <img className="homepage-image" src="/homepage.png" alt="Homepage image" width={800} height={448} />
+          </div>
+        )}
+
+        {!loading && user && quote && (
+          <div className="quote">
+            <p>{quote.q}</p>
+            <p>- {quote.a}</p>
+          </div>
+        )}
+
+        {!loading && user && !quote && (
+          <div className="quote">
+            <p>We are what we repeatedly do. Excellence, then, is not an act, but a habit.</p>
+            <p>- Aristotle</p>
           </div>
         )}
 
