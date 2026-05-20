@@ -48,14 +48,16 @@ export default function Home() {
   const getQuotes = async () => {
     // check if quotes are already in local storage and not expired
     try {
-      const today = new Date();
+      const now = new Date();
       const storedQuote = localStorage.getItem("quote");
       const storedQuoteDateString = (localStorage.getItem("quoteDate"));
-      const storedQuoteDate = storedQuoteDateString ? new Date(storedQuoteDateString) : null;
+      const storedQuoteDate = storedQuoteDateString ? new Date(storedQuoteDateString) : null; // convert stored date back into date type, if exists
+
+      // check if over 15sec have passed
+      const timeDiff = storedQuoteDate ? (now.getTime() - storedQuoteDate.getTime()) / 1000 : null; 
 
       // if quote is found and not expired, return it
-      console.log("stored date:", storedQuoteDateString, ". today:", today.toDateString());
-      if (storedQuote && storedQuoteDate && storedQuoteDate >= today) { // NOTE: do we need to specify Day specifically to compare?
+      if (storedQuote && timeDiff !== null && timeDiff < 15) {
         setQuote(JSON.parse(storedQuote));
         return;
       }
@@ -75,13 +77,14 @@ export default function Home() {
         setQuote(newQuote);
         // Store in local storage with expiration time (e.g., 24 hours)
         const newQuoteDate = new Date();
-        newQuoteDate.setDate(newQuoteDate.getDate() + 1);
+        newQuoteDate.setDate(newQuoteDate.getDate());
         localStorage.setItem("quote", JSON.stringify(newQuote));
         localStorage.setItem("quoteDate", newQuoteDate.toISOString());
       }
 
     } catch (error) {
       // set default quote
+      setQuote({ q: "We are what we repeatedly do. Excellence, then, is not an act, but a habit.", a: "Aristotle" });
       console.error("Error fetching quote:", error);
     }
   }
@@ -153,13 +156,6 @@ export default function Home() {
           <div className="quote">
             <p>{quote.q}</p>
             <p>- {quote.a}</p>
-          </div>
-        )}
-
-        {!loading && user && !quote && (
-          <div className="quote">
-            <p>We are what we repeatedly do. Excellence, then, is not an act, but a habit.</p>
-            <p>- Aristotle</p>
           </div>
         )}
 
