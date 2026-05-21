@@ -52,6 +52,7 @@ export default function Home() {
 
     try {
       const now = new Date();
+      // we use localStorage cache because it has the best performance
       const storedQuote = localStorage.getItem("quote");
       const storedQuoteDateString = (localStorage.getItem("quoteDate"));
       const storedQuoteDate = storedQuoteDateString ? new Date(storedQuoteDateString) : null; // convert stored date back into date type, if exists
@@ -60,7 +61,7 @@ export default function Home() {
       const timeDiff = storedQuoteDate ? (now.getTime() - storedQuoteDate.getTime()) / 1000 : null;
 
       // if quote is found and not expired, return it
-      if (storedQuote && timeDiff !== null && timeDiff < 15) {
+      if (storedQuote && timeDiff !== null && timeDiff < 7) { // 7 second cooldown, same as /api/quote cache
         setQuote(JSON.parse(storedQuote));
         return;
       }
