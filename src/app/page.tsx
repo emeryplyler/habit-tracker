@@ -13,7 +13,7 @@ export default function Home() {
   const [user, setUser] = useState();
   const [habits, setHabits] = useState<any[]>([]); // type is array of any
 
-  const [quote, setQuote] = useState<{ q: string; a: string } | null>(null);
+  const [quote, setQuote] = useState<{ q: string; a: string; } | null>(null);
 
   const getHabits = async () => {
     try {
@@ -47,6 +47,9 @@ export default function Home() {
 
   const getQuotes = async () => {
     // check if quotes are already in local storage and not expired
+    // set default quote
+    setQuote({ q: "We are what we repeatedly do. Excellence, then, is not an act, but a habit.", a: "Aristotle" });
+
     try {
       const now = new Date();
       const storedQuote = localStorage.getItem("quote");
@@ -54,7 +57,7 @@ export default function Home() {
       const storedQuoteDate = storedQuoteDateString ? new Date(storedQuoteDateString) : null; // convert stored date back into date type, if exists
 
       // check if over 15sec have passed
-      const timeDiff = storedQuoteDate ? (now.getTime() - storedQuoteDate.getTime()) / 1000 : null; 
+      const timeDiff = storedQuoteDate ? (now.getTime() - storedQuoteDate.getTime()) / 1000 : null;
 
       // if quote is found and not expired, return it
       if (storedQuote && timeDiff !== null && timeDiff < 15) {
@@ -66,10 +69,6 @@ export default function Home() {
       const response = await axios.get("/api/quote");
 
       // timeout?
-      
-      if (response.status !== 200) {
-        throw new Error(`HTTP error with status ${response.status}`);
-      }
 
       const newQuote = response.data.data[0]; // response is array of quote objects
 
@@ -83,11 +82,9 @@ export default function Home() {
       }
 
     } catch (error) {
-      // set default quote
-      setQuote({ q: "We are what we repeatedly do. Excellence, then, is not an act, but a habit.", a: "Aristotle" });
       console.error("Error fetching quote:", error);
     }
-  }
+  };
 
   useEffect(() => {
     getHabits(); // retrieve user's habits on page load
@@ -152,10 +149,10 @@ export default function Home() {
           </div>
         )}
 
-        {!loading && user && quote && (
-          <div className="quote">
-            <p>{quote.q}</p>
-            <p>- {quote.a}</p>
+        {user && (
+          <div className="quote w-150 h-20">
+            <p className="mt-2 text-lg italic">{quote ? quote.q : ""}</p>
+            <p className="mt-2">{quote ? `- ${quote.a}` : ""}</p>
           </div>
         )}
 
