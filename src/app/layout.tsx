@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "../styles/globals.css";
 import NavBar from "../components/NavBar";
 import { cookies } from "next/headers";
+import ThemeProvider from "@/components/ThemeProvider";
+import { Suspense } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,17 +25,21 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children, }: Readonly<{ children: React.ReactNode; }>) {
 
   // read light/dark mode cookie
-  const cookieStore = await cookies();
-  const mode = cookieStore.get("mode")?.value || "light"; // default to light mode
+  // const cookieStore = await cookies();
+  // const mode = cookieStore.get("mode")?.value || "light"; // default to light mode
 
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased ${mode === "dark" ? "dark-mode" : ""}`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {/* Insert custom nav-bar component */}
-        <NavBar />
-        {children}
+        <Suspense>
+          <ThemeProvider>
+            {/* Insert custom nav-bar component */}
+            <NavBar />
+            {children}          
+          </ThemeProvider>          
+        </Suspense>
       </body>
     </html>
   );
